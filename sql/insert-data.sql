@@ -8,7 +8,7 @@ VALUES
 ('Elephant', 'Largest land animal', '2010-09-15', 'Loxodonta africana', 'Grassland', 'Botswana', 2);
 
 -- Insert cares
-INSERT INTO Cares (type_of_care, description, fresquency, cares_id)
+INSERT INTO Cares (type_of_care, description, frequency, cares_id)
 VALUES
 ('Feeding', 'Daily feeding routine', 'Daily', 1),
 ('Medical Check', 'Monthly health check', 'Monthly', 2);

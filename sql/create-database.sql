@@ -4,7 +4,7 @@ CREATE TABLE Animal (
     name VARCHAR(250),
     description TEXT,
     date_of_birth DATE,
-    specie VArCHAR(250),
+    specie VARCHAR(250),
     habitat VARCHAR(250),
     country_of_origin VARCHAR(250),
     animal_id INT PRIMARY KEY
@@ -12,7 +12,7 @@ CREATE TABLE Animal (
 CREATE TABLE Cares (
     type_of_care VARCHAR(250),
     description TEXT,
-    fresquency VARCHAR(250),
+    frequency VARCHAR(250),
     cares_id INT PRIMARY KEY
 )
 CREATE TABLE Animal_Care_have (
