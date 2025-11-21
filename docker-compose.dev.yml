@@ -1,0 +1,53 @@
+services:
+  rust-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: rust-backend-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - backend-target:/app/target
+      - backend-cargo:/usr/local/cargo/registry
+    environment:
+      - RUST_LOG=info
+      - ENVIRONMENT=development
+    depends_on:
+      - sqlserver
+
+  react-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: react-frontend-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /app
+      - type: volume
+        target: /app/node_modules
+
+    environment:
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - rust-backend
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password123
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+      - ./sql:/sql
+
+volumes:
+  sqlserver-data:
+  backend-target:
+  backend-cargo:

@@ -1,0 +1,19 @@
+FROM rustlang/rust:nightly
+WORKDIR /app
+
+# Install cargo-watch for hot reload
+RUN cargo install cargo-watch
+
+# Copy dependency files
+COPY Cargo.toml Cargo.lock ./
+
+# Create dummy main to cache dependencies
+RUN mkdir src && echo "fn main() {}" > src/main.rs && \
+    cargo build && \
+    rm -rf src
+
+# Expose port
+EXPOSE 3000
+
+# Run with auto-reload on file changes
+CMD ["cargo", "watch", "-x", "run"]

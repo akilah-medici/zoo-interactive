@@ -1,0 +1,31 @@
+services:
+  rust-backend:
+    build: ./backend
+    container_name: rust-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - RUST_LOG=info
+      - ENVIRONMENT=development
+
+  react-frontend:
+    build: ./frontend
+    container_name: react-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - rust-backend
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password123
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+volumes:
+  sqlserver-data:
