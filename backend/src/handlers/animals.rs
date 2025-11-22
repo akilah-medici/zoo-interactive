@@ -247,10 +247,7 @@ pub async fn update_animal(
     // Validate required fields if provided
     if let Some(ref name) = payload.name {
         if name.trim().is_empty() {
-            return Err((
-                StatusCode::BAD_REQUEST,
-                "Name cannot be empty".to_string(),
-            ));
+            return Err((StatusCode::BAD_REQUEST, "Name cannot be empty".to_string()));
         }
     }
     if let Some(ref specie) = payload.specie {
