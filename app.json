@@ -1,0 +1,53 @@
+{
+  "name": "Zoo Management System",
+  "description": "A zoo management system with React frontend and Rust backend",
+  "repository": "https://github.com/akilah-medici/zoo-interactive",
+  "keywords": ["rust", "react", "zoo", "management"],
+  "stack": "container",
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    {
+      "plan": "jawsdb:kitefin",
+      "as": "DATABASE"
+    }
+  ],
+  "env": {
+    "RUST_LOG": {
+      "description": "Rust logging level",
+      "value": "info"
+    },
+    "ENVIRONMENT": {
+      "description": "Environment type",
+      "value": "production"
+    },
+    "DATABASE_HOST": {
+      "description": "Database host",
+      "required": true
+    },
+    "DATABASE_PORT": {
+      "description": "Database port",
+      "value": "1433"
+    },
+    "DATABASE_NAME": {
+      "description": "Database name",
+      "value": "zoo_db"
+    },
+    "DATABASE_USER": {
+      "description": "Database user",
+      "required": true
+    },
+    "DATABASE_PASSWORD": {
+      "description": "Database password",
+      "required": true
+    }
+  },
+  "buildpacks": [],
+  "scripts": {
+    "postdeploy": "echo 'Deployment complete!'"
+  }
+}

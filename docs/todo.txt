@@ -1,0 +1,17 @@
+implementar insert no banco de dados-
+    insert de cuidados-
+    insert de animais-
+    inseet automatico em animais_cuidados-
+implementar delete-
+implementar novas paginas no front - mais facil-
+*verificar se há uma maneira melhor de trazer as informações do back pro front
+
+arrumar centralização do dahsborad
+incluir informações uteis no dashboard
+
+
+
+para deploy no heroku
+    criar database na azure
+    conectar no rust
+    

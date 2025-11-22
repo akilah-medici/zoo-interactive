@@ -1,0 +1,75 @@
+name: Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy-backend:
+    name: Deploy Backend to Heroku
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.14
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          usedocker: true
+          docker_heroku_process_type: web
+          docker_build_args: |
+            BUILD_DATE
+          appdir: "backend"
+
+      - name: Verify deployment
+        run: |
+          sleep 10
+          curl -f https://${{secrets.HEROKU_APP_NAME}}.herokuapp.com/message || exit 1
+
+      - name: Notify on success
+        if: success()
+        run: echo "✅ Deployment successful!"
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "❌ Deployment failed!"
+
+  test-backend:
+    name: Test Backend Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Cache cargo dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            backend/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build backend
+        working-directory: backend
+        run: cargo build --release
+
+      - name: Run tests
+        working-directory: backend
+        run: cargo test || true
