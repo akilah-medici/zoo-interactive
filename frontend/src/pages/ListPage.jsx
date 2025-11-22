@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker, { registerLocale } from "react-datepicker";
 import { ptBR } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
+import PopupCare from "./components/PopupCare";
 
 registerLocale("pt-BR", ptBR);
 
@@ -12,6 +13,9 @@ export default function ListPage() {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [popupController, setPopupController] = useState(false);
+    // tirar depois
+    const [animalPopupID, setAnimalPopupID] = useState(null);
     const [addAnimalDate, setAddAnimalDate] = useState(null);
     const [newAnimal, setNewAnimal] = useState({
         name: "",
@@ -107,9 +111,10 @@ export default function ListPage() {
 
     return (
         <div style={{ padding: "2rem" }}>
+            <h1>Lista de Animais</h1>
             <input
                 type="text"
-                placeholder="Search animals..."
+                placeholder="Pesquise um animal por nome ou espécie..."
                 value={search}
                 onChange={handleSearchChange}
                 style={{ width: "100%", padding: "0.5rem", marginBottom: "1rem" }}
@@ -123,27 +128,35 @@ export default function ListPage() {
                     {filtered.map((animal) => (
                         <div
                             key={animal.animal_id}
-                            style={{ border: "1px solid #ccc", marginBottom: "1rem", padding: "1rem" }}
+                            style={{ border: "1px solid #ccc", marginBottom: "1rem", padding: "1rem", position: "relative"}}
+                            onMouseEnter={() => setAnimalPopupID(animal.animal_id)}
+                            onMouseLeave={() => setAnimalPopupID(null)}
                         >
+                            <div>
+                                {animalPopupID === animal.animal_id && (
+                                <PopupCare id={animal.animal_id} />
+                                )}
+                            </div>
                             <h3>{animal.name}</h3>
                             <p>
-                                <strong>Specie:</strong> {animal.specie}
+                                <strong>Espécie:</strong> {animal.specie}
                             </p>
                             <p>
                                 <strong>Habitat:</strong> {animal.habitat}
                             </p>
                             <p>
-                                <strong>Description:</strong> {animal.description}
+                                <strong>Descrição:</strong> {animal.description}
                             </p>
                             <p>
-                                <strong>Country of Origin:</strong> {animal.country_of_origin}
+                                <strong>País de origem:</strong> {animal.country_of_origin}
                             </p>
                             <p>
-                                <strong>Date of Birth:</strong> {new Date(animal.date_of_birth).toLocaleDateString("pt-BR")}
+                                <strong>Data de nascimento:</strong> {new Date(animal.date_of_birth).toLocaleDateString("pt-BR")}
                             </p>
                         </div>
                     ))}
-                    {filtered.length === 0 && !loading && <p>No animals found.</p>}
+                    {filtered.length === 0 && !loading && <p>Nenhum animal encontrado.</p>}
+                    
                 </div>
 
                 {/* Add Animal Section */}

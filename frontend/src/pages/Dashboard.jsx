@@ -75,7 +75,7 @@ export default function Dashboard() {
             {animals.map((animal) => (
               <div key={animal.animal_id} style={styles.animalCard}>
                 <h3 style={styles.animalName}>{animal.name}</h3>
-                <p><strong>Species:</strong> {animal.specie}</p>
+                <p><strong>Espécie:</strong> {animal.specie}</p>
                 <p><strong>Habitat:</strong> {animal.habitat || 'Unknown'}</p>
                 <p>
                   <strong>Status:</strong>{' '}
@@ -99,6 +99,7 @@ export default function Dashboard() {
         </>
       )}
       <button onClick={() => navigate("/list")} >Lista de Animais</button>
+      <button onClick={() => navigate("/modify")} >Modificar Animais</button>
     </div>
   );
 }

@@ -32,16 +32,21 @@ async fn main() {
         .route("/add", post(add_animal))
         .route("/animals/{id}", get(get_animal_by_id));
 
-    let cares_router = Router::new().route("/list", get(get_cares));
+    let cares_router = Router::new()
+        .route("/list", get(get_cares))
+        .route("/by-id/{id}", get(get_care_by_id));
 
-    let animal_cares = Router::new().route("/list", get(get_animal_cares));
+    let animal_cares_router = Router::new()
+        .route("/list", get(get_animal_cares))
+        .route("/by-id/{id}", get(get_animal_care_by_id))
+        .route("/by-animal/by-id/{id}", get(get_animal_care_by_animal_id));
 
     // Build application routes
     let app = Router::new()
         .route("/message", get(initial_page))
         .nest("/animals", animals_router)
         .nest("/cares", cares_router)
-        .nest("/animal-cares", animal_cares)
+        .nest("/animal-cares", animal_cares_router)
         .with_state(database)
         .layer(cors);
 
