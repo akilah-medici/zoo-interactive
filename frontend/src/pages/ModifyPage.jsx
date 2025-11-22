@@ -4,6 +4,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import { ptBR } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import PopupCare from "./components/PopupCare";
+import ModifyAnimalPopup from "./components/ModifyAnimalPopup";
 
 registerLocale("pt-BR", ptBR);
 
@@ -13,6 +14,8 @@ export default function ModifyPage() {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [selectedAnimals, setSelectedAnimals] = useState([]);
+    const [currentModifyIndex, setCurrentModifyIndex] = useState(null);
     // tirar depois
     const [addAnimalDate, setAddAnimalDate] = useState(null);
     const [newAnimal, setNewAnimal] = useState({
@@ -107,6 +110,151 @@ export default function ModifyPage() {
         setNewAnimal({ ...newAnimal, [e.target.name]: e.target.value });
     }
 
+    function toggleAnimalSelection(animalId) {
+        setSelectedAnimals(prev => 
+            prev.includes(animalId) 
+                ? prev.filter(id => id !== animalId)
+                : [...prev, animalId]
+        );
+    }
+
+    async function deleteSelectedAnimals() {
+        if (selectedAnimals.length === 0) {
+            setError("Nenhum animal selecionado para excluir");
+            return;
+        }
+
+        try {
+            setError(null);
+            const deletePromises = selectedAnimals.map(id =>
+                fetch(`http://localhost:3000/animals/deactivate/${id}`, {
+                    method: 'POST'
+                })
+            );
+
+            const results = await Promise.all(deletePromises);
+            const failedDeletes = results.filter(r => !r.ok);
+
+            if (failedDeletes.length > 0) {
+                throw new Error(`Falha ao excluir ${failedDeletes.length} animal(is)`);
+            }
+
+            // Remove deactivated animals from state
+            setAnimals(prev => prev.filter(a => !selectedAnimals.includes(a.animal_id)));
+            setFiltered(prev => prev.filter(a => !selectedAnimals.includes(a.animal_id)));
+            setSelectedAnimals([]);
+        } catch (e) {
+            setError(e.message);
+        }
+    }
+
+    function startModifyWorkflow() {
+        if (selectedAnimals.length === 0) {
+            setError("Nenhum animal selecionado para modificar");
+            return;
+        }
+        setError(null);
+        setCurrentModifyIndex(0);
+    }
+
+    async function handleModifySave(modifiedAnimal, careData) {
+        try {
+            setError(null);
+            
+            // Update animal
+            const animalResponse = await fetch(`http://localhost:3000/animals/update/${modifiedAnimal.animal_id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: modifiedAnimal.name,
+                    specie: modifiedAnimal.specie,
+                    habitat: modifiedAnimal.habitat || null,
+                    description: modifiedAnimal.description || null,
+                    country_of_origin: modifiedAnimal.country_of_origin || null,
+                    date_of_birth: modifiedAnimal.date_of_birth 
+                        ? new Date(modifiedAnimal.date_of_birth).toISOString().slice(0, 10)
+                        : null
+                })
+            });
+
+            if (!animalResponse.ok) {
+                throw new Error('Falha ao atualizar animal');
+            }
+
+            const updatedAnimal = await animalResponse.json();
+
+            // Handle care if provided
+            if (careData) {
+                let careId = careData.careId;
+
+                // Create new care if needed
+                if (careData.isNewCare) {
+                    const careResponse = await fetch('http://localhost:3000/cares/add', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            type_of_care: careData.type_of_care,
+                            description: careData.description,
+                            frequency: careData.frequency
+                        })
+                    });
+
+                    if (!careResponse.ok) {
+                        throw new Error('Falha ao criar cuidado');
+                    }
+
+                    const createdCare = await careResponse.json();
+                    careId = createdCare.cares_id;
+                }
+
+                // Create animal-care relationship
+                const relationResponse = await fetch('http://localhost:3000/animal-cares/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        fk_animal_animal_id: modifiedAnimal.animal_id,
+                        fk_cares_cares_id: careId,
+                        date_of_care: careData.date_of_care 
+                            ? new Date(careData.date_of_care).toISOString().slice(0, 10)
+                            : null
+                    })
+                });
+
+                if (!relationResponse.ok) {
+                    throw new Error('Falha ao associar cuidado ao animal');
+                }
+            }
+
+            // Update local state
+            setAnimals(prev => prev.map(a => 
+                a.animal_id === updatedAnimal.animal_id ? updatedAnimal : a
+            ));
+            setFiltered(prev => prev.map(a => 
+                a.animal_id === updatedAnimal.animal_id ? updatedAnimal : a
+            ));
+
+            // Move to next animal or finish
+            if (currentModifyIndex < selectedAnimals.length - 1) {
+                setCurrentModifyIndex(currentModifyIndex + 1);
+            } else {
+                // Workflow complete
+                setCurrentModifyIndex(null);
+                setSelectedAnimals([]);
+            }
+        } catch (e) {
+            setError(e.message);
+        }
+    }
+
+    function handleModifyCancel() {
+        // Skip to next animal or finish
+        if (currentModifyIndex < selectedAnimals.length - 1) {
+            setCurrentModifyIndex(currentModifyIndex + 1);
+        } else {
+            setCurrentModifyIndex(null);
+            setSelectedAnimals([]);
+        }
+    }
 
 
     return (
@@ -138,7 +286,14 @@ export default function ModifyPage() {
                             position: "relative",
                         }}
                     >
-                        <h3><input type="checkbox" />{animal.name}</h3>
+                        <h3>
+                            <input 
+                                type="checkbox" 
+                                checked={selectedAnimals.includes(animal.animal_id)}
+                                onChange={() => toggleAnimalSelection(animal.animal_id)}
+                            />
+                            {animal.name}
+                        </h3>
                         <p>
                             <strong>Espécie:</strong> {animal.specie}
                         </p>
@@ -160,9 +315,19 @@ export default function ModifyPage() {
             </div>
             <div style={{padding: "2rem"}}>
                 <button onClick={() => {navigate("/")}}>Páginal Principal</button>
-                <button onClick={() => {}}>Modificar</button>
-                <button onClick={() => {}}>Exlcuir</button>
+                <button onClick={startModifyWorkflow}>Modificar ({selectedAnimals.length})</button>
+                <button onClick={deleteSelectedAnimals}>Excluir ({selectedAnimals.length})</button>
             </div>
+            
+            {currentModifyIndex !== null && (
+                <ModifyAnimalPopup
+                    animal={animals.find(a => a.animal_id === selectedAnimals[currentModifyIndex])}
+                    animalIndex={currentModifyIndex + 1}
+                    totalAnimals={selectedAnimals.length}
+                    onSave={handleModifySave}
+                    onCancel={handleModifyCancel}
+                />
+            )}
             
             </div>
         </div>

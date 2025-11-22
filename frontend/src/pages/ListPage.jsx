@@ -63,12 +63,23 @@ export default function ListPage() {
 
     async function addAnimal() {
         setError(null);
+        
+        // Validate required fields
+        if (!newAnimal.name || newAnimal.name.trim() === '') {
+            setError('O campo Nome é obrigatório');
+            return;
+        }
+        if (!newAnimal.specie || newAnimal.specie.trim() === '') {
+            setError('O campo Espécie é obrigatório');
+            return;
+        }
+        
         const payload = {
-            name: newAnimal.name,
-            specie: newAnimal.specie,
-            habitat: newAnimal.habitat || null,
-            description: newAnimal.description || null,
-            country_of_origin: newAnimal.country_of_origin || null,
+            name: newAnimal.name.trim(),
+            specie: newAnimal.specie.trim(),
+            habitat: newAnimal.habitat?.trim() || null,
+            description: newAnimal.description?.trim() || null,
+            country_of_origin: newAnimal.country_of_origin?.trim() || null,
             date_of_birth: newAnimal.date_of_birth
                 ? newAnimal.date_of_birth.toISOString().slice(0, 10)
                 : null,
@@ -110,82 +121,86 @@ export default function ListPage() {
     }
 
     return (
-        <div style={{ padding: "2rem" }}>
-            <h1>Lista de Animais</h1>
-            <input
-                type="text"
-                placeholder="Pesquise um animal por nome ou espécie..."
-                value={search}
-                onChange={handleSearchChange}
-                style={{ width: "100%", padding: "0.5rem", marginBottom: "1rem" }}
-            />
-            <div style={{ display: "flex", gap: "2rem" }}>
-                {/* Animal List Section */}
-                <div style={{ flex: 1 }}>
-                    <h3>Lista de Animais</h3>
-                    {loading && <p>Loading...</p>}
-                    {error && <p style={{ color: "red" }}>Error: {error}</p>}
-                    {filtered.map((animal) => (
-                        <div
-                            key={animal.animal_id}
-                            style={{ border: "1px solid #ccc", marginBottom: "1rem", padding: "1rem", position: "relative"}}
-                            onMouseEnter={() => setAnimalPopupID(animal.animal_id)}
-                            onMouseLeave={() => setAnimalPopupID(null)}
-                        >
-                            <div>
-                                {animalPopupID === animal.animal_id && (
-                                <PopupCare id={animal.animal_id} />
-                                )}
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", width: "100vw", padding: "2rem 1rem", boxSizing: "border-box" }}>
+            <div style={{ width: "100%", maxWidth: "1200px" }}>
+                <h1>Lista de Animais</h1>
+                <input
+                    type="text"
+                    placeholder="Pesquise um animal por nome ou espécie..."
+                    value={search}
+                    onChange={handleSearchChange}
+                    style={{ width: "100%", padding: "0.5rem", marginBottom: "1rem" }}
+                />
+
+                {/* List + Add form side-by-side */}
+                <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
+                    {/* Scrollable list container matching ModifyPage */}
+                    <div style={{ flex: 1, maxHeight: "600px", overflow: "auto",minWidth: "350px", maxWidth: "900px" }}>
+                        <h3 style={{ position: "sticky", top: 0, background: "#242424", color: "#ffffff", zIndex: 2, padding: "0.5rem 0" }}>Lista Completa</h3>
+                        {loading && <p>Loading...</p>}
+                        {error && <p style={{ color: "red" }}>Error: {error}</p>}
+                        {filtered.map((animal, idx) => (
+                            <div
+                                key={animal.animal_id}
+                                style={{
+                                    border: "1px solid #ccc",
+                                    marginBottom: "1rem",
+                                    padding: "1rem",
+                                    position: "relative",
+                                    ...(idx === 0 ? { marginTop: "8px" } : {})
+                                }}
+                                onMouseEnter={() => setAnimalPopupID(animal.animal_id)}
+                                onMouseLeave={() => setAnimalPopupID(null)}
+                            >
+                                <h3>{animal.name}</h3>
+                                <p><strong>Espécie:</strong> {animal.specie}</p>
+                                <p><strong>Habitat:</strong> {animal.habitat}</p>
+                                <p><strong>Descrição:</strong> {animal.description}</p>
+                                <p><strong>País de origem:</strong> {animal.country_of_origin}</p>
+                                <p><strong>Data de nascimento:</strong> {new Date(animal.date_of_birth).toLocaleDateString("pt-BR")}</p>
                             </div>
-                            <h3>{animal.name}</h3>
-                            <p>
-                                <strong>Espécie:</strong> {animal.specie}
-                            </p>
-                            <p>
-                                <strong>Habitat:</strong> {animal.habitat}
-                            </p>
-                            <p>
-                                <strong>Descrição:</strong> {animal.description}
-                            </p>
-                            <p>
-                                <strong>País de origem:</strong> {animal.country_of_origin}
-                            </p>
-                            <p>
-                                <strong>Data de nascimento:</strong> {new Date(animal.date_of_birth).toLocaleDateString("pt-BR")}
-                            </p>
-                        </div>
-                    ))}
-                    {filtered.length === 0 && !loading && <p>Nenhum animal encontrado.</p>}
-                    
+                        ))}
+                        {filtered.length === 0 && !loading && <p>Nenhum animal encontrado.</p>}
+                        
+                    </div>
+
+                    {/* Add Animal Section (side-by-side) */}
+                    <div style={{ flex: "0 0 360px" }}>
+                        <h3>Adicionar Animal</h3>
+                        <table>
+                            <tbody>
+                                <tr><td><input type="text" name="name" placeholder="Nome do animal..." value={newAnimal.name} onChange={handleChange}/></td></tr>
+                                <tr><td><input type="text" name="specie" placeholder="Especie do animal..." value={newAnimal.specie} onChange={handleChange}/></td></tr>
+                                <tr><td><input type="text" name="description" placeholder="Descrição do animal..." value={newAnimal.description} onChange={handleChange}/></td></tr>
+                                <tr><td><input type="text" name="habitat" placeholder="Habitat do animal..." value={newAnimal.habitat} onChange={handleChange}/></td></tr>
+                                <tr><td><input type="text" name="country_of_origin" placeholder="País de origem do animal..." value={newAnimal.country_of_origin} onChange={handleChange}/></td></tr>
+                                <tr>
+                                    <td>
+                                        <DatePicker
+                                            selected={newAnimal.date_of_birth}
+                                            onChange={date => setNewAnimal({ ...newAnimal, date_of_birth: date })}
+                                            dateFormat="dd/MM/yyyy"
+                                            placeholderText="Dia/Mês/Ano"
+                                            locale="pt-BR"
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {animalPopupID !== null && (
+                            <div style={{ marginTop: "1rem" }}>
+                                <PopupCare id={animalPopupID} inline={true} />
+                            </div>
+                        )}
+                    </div>
                 </div>
 
-                {/* Add Animal Section */}
-                <div style={{ flex: 1 }}>
-                    <h3>Adicionar Animal</h3>
-                    <table>
-                        <tbody>
-                            <tr><td><input type="text" name="name" placeholder="Nome do animal..." value={newAnimal.name} onChange={handleChange}/></td></tr>
-                            <tr><td><input type="text" name="specie" placeholder="Especie do animal..." value={newAnimal.specie} onChange={handleChange}/></td></tr>
-                            <tr><td><input type="text" name="description" placeholder="Descrição do animal..." value={newAnimal.description} onChange={handleChange}/></td></tr>
-                            <tr><td><input type="text" name="habitat" placeholder="Habitat do animal..." value={newAnimal.habitat} onChange={handleChange}/></td></tr>
-                            <tr><td><input type="text" name="country_of_origin" placeholder="País de origem do animal..." value={newAnimal.country_of_origin} onChange={handleChange}/></td></tr>
-                            <tr>
-                                <td>
-                                    <DatePicker
-                                        selected={newAnimal.date_of_birth}
-                                        onChange={date => setNewAnimal({ ...newAnimal, date_of_birth: date })}
-                                        dateFormat="dd/MM/yyyy"
-                                        placeholderText="Dia/Mês/Ano"
-                                        locale="pt-BR"
-                                    />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                {/* Actions */}
+                <div style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}>
+                    <button onClick={() => { navigate("/") }}>Páginal Principal</button>
+                    <button onClick={() => { addAnimal() }}>Adicionar</button>
                 </div>
             </div>
-            <button onClick={() => {navigate("/")}}>Páginal Principal</button>
-            <button onClick={() => {addAnimal()}}>Adicionar</button>
         </div>
     );
 }

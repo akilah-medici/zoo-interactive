@@ -5,7 +5,6 @@ use axum::{
     extract::{Path, State},
     http::StatusCode,
 };
-use chrono::NaiveDate;
 
 pub async fn get_cares(
     State(db): State<Database>,
@@ -95,4 +94,86 @@ pub async fn get_care_by_id(
             format!("Animal care with id {} not found", id),
         ))
     }
+}
+
+/// Handler to add a new care
+pub async fn add_care(
+    State(db): State<Database>,
+    Json(payload): Json<CreateCare>,
+) -> Result<(StatusCode, Json<Care>), (StatusCode, String)> {
+    // Validate required fields
+    if payload.type_of_care.trim().is_empty() {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            "Type of care is required and cannot be empty".to_string(),
+        ));
+    }
+    if payload.frequency.trim().is_empty() {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            "Frequency is required and cannot be empty".to_string(),
+        ));
+    }
+
+    let mut client = db.connect().await.map_err(|e| {
+        eprintln!("Database connection error: {}", e);
+        (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("Database connection error: {}", e),
+        )
+    })?;
+
+    // Determine next id manually
+    let id_query = "SELECT ISNULL(MAX(cares_id),0)+1 AS next_id FROM Cares";
+    let id_stream = client.query(id_query, &[]).await.map_err(|e| {
+        eprintln!("ID query error: {}", e);
+        (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("ID query error: {}", e),
+        )
+    })?;
+    let id_rows = id_stream.into_first_result().await.map_err(|e| {
+        eprintln!("ID result error: {}", e);
+        (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("ID result error: {}", e),
+        )
+    })?;
+    let new_id = id_rows.first().and_then(|r| r.get::<i32, _>(0)).ok_or((
+        StatusCode::INTERNAL_SERVER_ERROR,
+        "Failed to compute next id".to_string(),
+    ))?;
+
+    let insert_query = r#"
+        INSERT INTO Cares (cares_id, type_of_care, description, frequency)
+        VALUES (@P1, @P2, @P3, @P4)
+    "#;
+
+    client
+        .execute(
+            insert_query,
+            &[
+                &new_id,
+                &payload.type_of_care,
+                &payload.description,
+                &payload.frequency,
+            ],
+        )
+        .await
+        .map_err(|e| {
+            eprintln!("Insert error: {}", e);
+            (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                format!("Insert error: {}", e),
+            )
+        })?;
+
+    let created = Care {
+        cares_id: new_id,
+        type_of_care: payload.type_of_care,
+        description: payload.description,
+        frequency: payload.frequency,
+    };
+
+    Ok((StatusCode::CREATED, Json(created)))
 }

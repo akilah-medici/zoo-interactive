@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import './PopupCare.css';
 
-export default function PopupCare({id}) {
+export default function PopupCare({id, inline = false}) {
     const [cares, setCares] = useState([]);
     const [animalCares, setAnimalCares] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -59,15 +59,17 @@ export default function PopupCare({id}) {
     return (
         <div id="background"
             style={{
-                position: "absolute",
-                top: "70%",
-                left: "80%",
+                position: inline ? "static" : "fixed",
+                top: inline ? "auto" : "20px",
+                right: inline ? "auto" : "20px",
                 background: "#fff",
                 border: "1px solid #ccc",
                 padding: "1rem",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-                zIndex: 1000,
-                minWidth: "200px"
+                boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
+                zIndex: inline ? 1 : 1000,
+                minWidth: "260px",
+                maxWidth: "340px",
+                borderRadius: "8px"
             }}
         >   
             {cares && cares.type_of_care

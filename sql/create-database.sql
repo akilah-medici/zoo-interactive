@@ -7,6 +7,7 @@ CREATE TABLE Animal (
     specie VARCHAR(250),
     habitat VARCHAR(250),
     country_of_origin VARCHAR(250),
+    is_active BIT,
     animal_id INT PRIMARY KEY
 )
 CREATE TABLE Cares (

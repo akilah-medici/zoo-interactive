@@ -1,4 +1,4 @@
-use axum::routing::{Router, get, post};
+use axum::routing::{Router, get, post, put};
 use tower_http::cors::CorsLayer;
 
 pub mod db;
@@ -30,16 +30,20 @@ async fn main() {
     let animals_router = Router::new()
         .route("/list", get(get_animals))
         .route("/add", post(add_animal))
-        .route("/animals/{id}", get(get_animal_by_id));
+        .route("/animals/{id}", get(get_animal_by_id))
+        .route("/deactivate/{id}", post(deactivate_animal))
+        .route("/update/{id}", put(update_animal));
 
     let cares_router = Router::new()
         .route("/list", get(get_cares))
-        .route("/by-id/{id}", get(get_care_by_id));
+        .route("/by-id/{id}", get(get_care_by_id))
+        .route("/add", post(add_care));
 
     let animal_cares_router = Router::new()
         .route("/list", get(get_animal_cares))
         .route("/by-id/{id}", get(get_animal_care_by_id))
-        .route("/by-animal/by-id/{id}", get(get_animal_care_by_animal_id));
+        .route("/by-animal/by-id/{id}", get(get_animal_care_by_animal_id))
+        .route("/add", post(add_animal_care));
 
     // Build application routes
     let app = Router::new()

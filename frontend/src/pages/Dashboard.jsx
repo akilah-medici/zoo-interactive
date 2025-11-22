@@ -72,7 +72,7 @@ export default function Dashboard() {
           <h2 style={styles.sectionTitle}>Animals List</h2>
           
           <div style={styles.animalsGrid}>
-            {animals.map((animal) => (
+            {animals.slice(0,6).map((animal) => (
               <div key={animal.animal_id} style={styles.animalCard}>
                 <h3 style={styles.animalName}>{animal.name}</h3>
                 <p><strong>Espécie:</strong> {animal.specie}</p>

@@ -9,11 +9,14 @@ pub struct AnimalCare {
     pub fk_cares_cares_id: i32,
     pub fk_animal_animal_id: i32,
 }
+
+#[derive(Debug, Deserialize)]
 pub struct CreateAnimalCare {
-    pub date_of_care: Option<NaiveDate>,
+    pub date_of_care: Option<String>,
     pub fk_cares_cares_id: i32,
     pub fk_animal_animal_id: i32,
 }
+
 pub struct UpdateAnimalCare {
     pub date_of_care: Option<NaiveDate>,
     pub fk_cares_cares_id: i32,

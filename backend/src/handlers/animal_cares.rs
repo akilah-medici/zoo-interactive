@@ -1,5 +1,5 @@
 use crate::db::Database;
-use crate::models::AnimalCare;
+use crate::models::{AnimalCare, CreateAnimalCare};
 use axum::{
     Json,
     extract::{Path, State},
@@ -139,4 +139,83 @@ pub async fn get_animal_care_by_animal_id(
             format!("Animal care with id {} not found", id),
         ))
     }
+}
+
+/// Handler to add a new animal care relationship
+pub async fn add_animal_care(
+    State(db): State<Database>,
+    Json(payload): Json<CreateAnimalCare>,
+) -> Result<(StatusCode, Json<AnimalCare>), (StatusCode, String)> {
+    let mut client = db.connect().await.map_err(|e| {
+        eprintln!("Database connection error: {}", e);
+        (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("Database connection error: {}", e),
+        )
+    })?;
+
+    // Parse date
+    let parsed_date: Option<NaiveDate> = if let Some(d) = &payload.date_of_care {
+        if d.contains('/') {
+            NaiveDate::parse_from_str(d, "%d/%m/%Y").ok()
+        } else {
+            NaiveDate::parse_from_str(d, "%Y-%m-%d").ok()
+        }
+    } else {
+        None
+    };
+
+    // Determine next id manually
+    let id_query = "SELECT ISNULL(MAX(animal_care_id),0)+1 AS next_id FROM Animal_Care_have";
+    let id_stream = client.query(id_query, &[]).await.map_err(|e| {
+        eprintln!("ID query error: {}", e);
+        (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("ID query error: {}", e),
+        )
+    })?;
+    let id_rows = id_stream.into_first_result().await.map_err(|e| {
+        eprintln!("ID result error: {}", e);
+        (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("ID result error: {}", e),
+        )
+    })?;
+    let new_id = id_rows.first().and_then(|r| r.get::<i32, _>(0)).ok_or((
+        StatusCode::INTERNAL_SERVER_ERROR,
+        "Failed to compute next id".to_string(),
+    ))?;
+
+    let insert_query = r#"
+        INSERT INTO Animal_Care_have (animal_care_id, date_of_care, fk_Cares_cares_id, fk_Animal_animal_id)
+        VALUES (@P1, @P2, @P3, @P4)
+    "#;
+
+    client
+        .execute(
+            insert_query,
+            &[
+                &new_id,
+                &parsed_date,
+                &payload.fk_cares_cares_id,
+                &payload.fk_animal_animal_id,
+            ],
+        )
+        .await
+        .map_err(|e| {
+            eprintln!("Insert error: {}", e);
+            (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                format!("Insert error: {}", e),
+            )
+        })?;
+
+    let created = AnimalCare {
+        animal_care_id: new_id,
+        date_of_care: parsed_date,
+        fk_cares_cares_id: payload.fk_cares_cares_id,
+        fk_animal_animal_id: payload.fk_animal_animal_id,
+    };
+
+    Ok((StatusCode::CREATED, Json(created)))
 }

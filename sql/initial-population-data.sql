@@ -27,106 +27,108 @@
 USE zoo_db;
 GO
 
-INSERT INTO Animal VALUES ('Pedro','Animal selvagem','2018-03-12','Leao','Savana','Africa',1);
-INSERT INTO Animal VALUES ('Luna','Animal selvagem','2017-11-05','Pantera','Floresta','Brasil',2);
-INSERT INTO Animal VALUES ('Rex','Animal selvagem','2020-01-22','Tigre','Floresta','India',3);
-INSERT INTO Animal VALUES ('Milo','Animal selvagem','2019-07-19','Hiena','Savana','Africa',4);
-INSERT INTO Animal VALUES ('Nina','Animal selvagem','2016-02-15','Elefante','Savana','Africa',5);
-INSERT INTO Animal VALUES ('Bento','Animal selvagem','2018-12-01','Guepardo','Savana','Africa',6);
-INSERT INTO Animal VALUES ('Zara','Animal selvagem','2021-05-10','Lobo','Montanhas','Canada',7);
-INSERT INTO Animal VALUES ('Thor','Animal selvagem','2015-09-27','Urso','Floresta','Russia',8);
-INSERT INTO Animal VALUES ('Kiara','Animal selvagem','2017-04-18','Leopardo','Floresta','India',9);
-INSERT INTO Animal VALUES ('Simba','Animal selvagem','2020-06-23','Leao','Savana','Africa',10);
-INSERT INTO Animal VALUES ('Akira','Animal selvagem','2019-12-09','Tigre','Floresta','China',11);
-INSERT INTO Animal VALUES ('Bolt','Animal selvagem','2018-08-30','Guepardo','Savana','Africa',12);
-INSERT INTO Animal VALUES ('Yumi','Animal selvagem','2014-05-14','Pantera','Floresta','Brasil',13);
-INSERT INTO Animal VALUES ('Orion','Animal selvagem','2013-10-03','Lobo','Montanhas','EUA',14);
-INSERT INTO Animal VALUES ('Atlas','Animal selvagem','2021-01-19','Urso','Floresta','Canada',15);
-INSERT INTO Animal VALUES ('Loki','Animal selvagem','2018-07-25','Leopardo','Floresta','India',16);
-INSERT INTO Animal VALUES ('Maya','Animal selvagem','2016-03-12','Elefante','Savana','Africa',17);
-INSERT INTO Animal VALUES ('Togo','Animal selvagem','2019-09-09','Hiena','Savana','Africa',18);
-INSERT INTO Animal VALUES ('Ruby','Animal selvagem','2022-02-28','Tartaruga','Praia','Brasil',19);
-INSERT INTO Animal VALUES ('Max','Animal selvagem','2017-05-17','Leao','Savana','Africa',20);
-INSERT INTO Animal VALUES ('Nala','Animal selvagem','2018-01-15','Pantera','Floresta','Brasil',21);
-INSERT INTO Animal VALUES ('Zeus','Animal selvagem','2019-06-10','Urso','Floresta','Canada',22);
-INSERT INTO Animal VALUES ('Koda','Animal selvagem','2017-02-11','Lobo','Montanhas','EUA',23);
-INSERT INTO Animal VALUES ('Rafa','Animal selvagem','2020-11-12','Elefante','Savana','Africa',24);
-INSERT INTO Animal VALUES ('Leo','Animal selvagem','2016-04-04','Leao','Savana','Africa',25);
-INSERT INTO Animal VALUES ('Argo','Animal selvagem','2015-09-14','Hiena','Savana','Africa',26);
-INSERT INTO Animal VALUES ('Suri','Animal selvagem','2018-03-27','Guepardo','Savana','Africa',27);
-INSERT INTO Animal VALUES ('Tina','Animal selvagem','2019-07-08','Pantera','Floresta','Brasil',28);
-INSERT INTO Animal VALUES ('Jade','Animal selvagem','2021-02-17','Leopardo','Floresta','India',29);
-INSERT INTO Animal VALUES ('Ciro','Animal selvagem','2016-12-25','Tigre','Floresta','China',30);
-INSERT INTO Animal VALUES ('Eros','Animal selvagem','2017-11-30','Leao','Savana','Africa',31);
-INSERT INTO Animal VALUES ('Mika','Animal selvagem','2020-09-21','Pantera','Floresta','Brasil',32);
-INSERT INTO Animal VALUES ('Ugo','Animal selvagem','2018-06-19','Lobo','Montanhas','Canada',33);
-INSERT INTO Animal VALUES ('Bruno','Animal selvagem','2015-03-28','Urso','Floresta','Russia',34);
-INSERT INTO Animal VALUES ('Lia','Animal selvagem','2017-08-11','Elefante','Savana','Africa',35);
-INSERT INTO Animal VALUES ('Yara','Animal selvagem','2018-10-15','Tartaruga','Praia','Brasil',36);
-INSERT INTO Animal VALUES ('Dante','Animal selvagem','2020-04-18','Guepardo','Savana','Africa',37);
-INSERT INTO Animal VALUES ('Rico','Animal selvagem','2019-12-07','Hiena','Savana','Africa',38);
-INSERT INTO Animal VALUES ('Tara','Animal selvagem','2022-03-13','Pantera','Floresta','Brasil',39);
-INSERT INTO Animal VALUES ('Gus','Animal selvagem','2018-09-10','Leao','Savana','Africa',40);
-INSERT INTO Animal VALUES ('Lola','Animal selvagem','2016-05-11','Pantera','Floresta','Brasil',41);
-INSERT INTO Animal VALUES ('Ragnar','Animal selvagem','2019-01-29','Lobo','Montanhas','EUA',42);
-INSERT INTO Animal VALUES ('Otto','Animal selvagem','2014-11-22','Urso','Floresta','Russia',43);
-INSERT INTO Animal VALUES ('Salem','Animal selvagem','2017-09-03','Pantera','Floresta','Brasil',44);
-INSERT INTO Animal VALUES ('Kai','Animal selvagem','2020-06-11','Tigre','Floresta','India',45);
-INSERT INTO Animal VALUES ('Noah','Animal selvagem','2018-08-14','Elefante','Savana','Africa',46);
-INSERT INTO Animal VALUES ('Pingo','Animal selvagem','2021-07-21','Tartaruga','Praia','Brasil',47);
-INSERT INTO Animal VALUES ('Indra','Animal selvagem','2015-10-10','Leopardo','Floresta','India',48);
-INSERT INTO Animal VALUES ('Hex','Animal selvagem','2019-04-19','Hiena','Savana','Africa',49);
-INSERT INTO Animal VALUES ('Gaia','Animal selvagem','2017-03-07','Leoa','Savana','Africa',50);
-INSERT INTO Animal VALUES ('Seth','Animal selvagem','2016-12-14','Pantera','Floresta','Brasil',51);
-INSERT INTO Animal VALUES ('Nero','Animal selvagem','2020-02-02','Lobo','Montanhas','Canada',52);
-INSERT INTO Animal VALUES ('Kali','Animal selvagem','2018-05-05','Urso','Floresta','Russia',53);
-INSERT INTO Animal VALUES ('Arya','Animal selvagem','2019-12-19','Pantera','Floresta','Brasil',54);
-INSERT INTO Animal VALUES ('Sol','Animal selvagem','2017-09-28','Elefante','Savana','Africa',55);
-INSERT INTO Animal VALUES ('Valen','Animal selvagem','2021-01-09','Leopardo','Floresta','India',56);
-INSERT INTO Animal VALUES ('Echo','Animal selvagem','2016-06-23','Lobo','Montanhas','EUA',57);
-INSERT INTO Animal VALUES ('Fera','Animal selvagem','2020-08-16','Tigre','Floresta','China',58);
-INSERT INTO Animal VALUES ('Shade','Animal selvagem','2018-11-05','Pantera','Floresta','Brasil',59);
-INSERT INTO Animal VALUES ('Ghost','Animal selvagem','2015-01-13','Lobo','Montanhas','Canada',60);
-INSERT INTO Animal VALUES ('Kora','Animal selvagem','2019-02-17','Elefante','Savana','Africa',61);
-INSERT INTO Animal VALUES ('Aryon','Animal selvagem','2014-07-29','Urso','Floresta','Russia',62);
-INSERT INTO Animal VALUES ('Tasha','Animal selvagem','2020-05-21','Pantera','Floresta','Brasil',63);
-INSERT INTO Animal VALUES ('Ravi','Animal selvagem','2018-03-18','Tigre','Floresta','India',64);
-INSERT INTO Animal VALUES ('Nero2','Animal selvagem','2017-11-30','Leao','Savana','Africa',65);
-INSERT INTO Animal VALUES ('Lira','Animal selvagem','2021-06-08','Tartaruga','Praia','Brasil',66);
-INSERT INTO Animal VALUES ('Uruk','Animal selvagem','2019-10-10','Hiena','Savana','Africa',67);
-INSERT INTO Animal VALUES ('Miro','Animal selvagem','2016-09-09','Leopardo','Floresta','India',68);
-INSERT INTO Animal VALUES ('Zion','Animal selvagem','2022-04-03','Pantera','Floresta','Brasil',69);
-INSERT INTO Animal VALUES ('Rocco','Animal selvagem','2018-08-11','Urso','Floresta','Russia',70);
-INSERT INTO Animal VALUES ('Sora','Animal selvagem','2017-12-22','Lobo','Montanhas','EUA',71);
-INSERT INTO Animal VALUES ('Kira','Animal selvagem','2020-09-14','Guepardo','Savana','Africa',72);
-INSERT INTO Animal VALUES ('Blitz','Animal selvagem','2018-04-20','Pantera','Floresta','Brasil',73);
-INSERT INTO Animal VALUES ('Juno','Animal selvagem','2019-11-27','Leoa','Savana','Africa',74);
-INSERT INTO Animal VALUES ('Flint','Animal selvagem','2016-01-01','Urso','Floresta','Canada',75);
-INSERT INTO Animal VALUES ('Odin','Animal selvagem','2015-07-09','Lobo','Montanhas','Russia',76);
-INSERT INTO Animal VALUES ('Milo2','Animal selvagem','2021-04-18','Tigre','Floresta','China',77);
-INSERT INTO Animal VALUES ('Uma','Animal selvagem','2018-05-31','Pantera','Floresta','Brasil',78);
-INSERT INTO Animal VALUES ('Rin','Animal selvagem','2020-12-05','Leao','Savana','Africa',79);
-INSERT INTO Animal VALUES ('Zya','Animal selvagem','2017-10-18','Guepardo','Savana','Africa',80);
-INSERT INTO Animal VALUES ('Puma','Animal selvagem','2022-01-14','Pantera','Floresta','Brasil',81);
-INSERT INTO Animal VALUES ('Ryu','Animal selvagem','2016-06-16','Lobo','Montanhas','EUA',82);
-INSERT INTO Animal VALUES ('Frost','Animal selvagem','2019-09-23','Urso','Floresta','Canada',83);
-INSERT INTO Animal VALUES ('Mira','Animal selvagem','2020-03-12','Pantera','Floresta','Brasil',84);
-INSERT INTO Animal VALUES ('Nox','Animal selvagem','2018-08-26','Tigre','Floresta','India',85);
-INSERT INTO Animal VALUES ('Silas','Animal selvagem','2015-02-17','Leao','Savana','Africa',86);
-INSERT INTO Animal VALUES ('Opal','Animal selvagem','2017-11-25','Leopardo','Floresta','India',87);
-INSERT INTO Animal VALUES ('Rune','Animal selvagem','2021-07-07','Pantera','Floresta','Brasil',88);
-INSERT INTO Animal VALUES ('Boris','Animal selvagem','2019-05-13','Urso','Floresta','Russia',89);
-INSERT INTO Animal VALUES ('Kron','Animal selvagem','2016-03-21','Lobo','Montanhas','Canada',90);
-INSERT INTO Animal VALUES ('Zephyr','Animal selvagem','2020-04-30','Pantera','Floresta','Brasil',91);
-INSERT INTO Animal VALUES ('Sasha','Animal selvagem','2018-12-02','Tigre','Floresta','China',92);
-INSERT INTO Animal VALUES ('Titan','Animal selvagem','2017-01-19','Leao','Savana','Africa',93);
-INSERT INTO Animal VALUES ('Vera','Animal selvagem','2021-02-26','Tartaruga','Praia','Brasil',94);
-INSERT INTO Animal VALUES ('Hati','Animal selvagem','2019-09-12','Lobo','Montanhas','EUA',95);
-INSERT INTO Animal VALUES ('Fenrir','Animal selvagem','2016-11-11','Urso','Floresta','Russia',96);
-INSERT INTO Animal VALUES ('Nyx','Animal selvagem','2020-08-03','Pantera','Floresta','Brasil',97);
-INSERT INTO Animal VALUES ('Echo2','Animal selvagem','2017-05-05','Lobo','Montanhas','Canada',98);
-INSERT INTO Animal VALUES ('Lotus','Animal selvagem','2019-10-29','Pantera','Floresta','Brasil',99);
-INSERT INTO Animal VALUES ('Blanca','Animal selvagem','2018-03-30','Tigre','Floresta','India',100);
+INSERT INTO Animal (name, description, date_of_birth, specie, habitat, country_of_origin, is_active, animal_id) VALUES
+('Pedro', 'Animal saudável e ativo.', '2017-03-12', 'Leão', 'Savana', 'África do Sul', 1, 1),
+('Luna', 'Animal dócil e calmo.', '2019-07-22', 'Pantera', 'Floresta', 'Brasil', 1, 2),
+('Max', 'Corre bastante.', '2018-11-03', 'Tigre', 'Floresta Tropical', 'Índia', 1, 3),
+('Bella', 'Muito brincalhona.', '2020-01-14', 'Onça', 'Floresta Amazônica', 'Brasil', 1, 4),
+('Thor', 'Animal forte e dominante.', '2016-05-30', 'Urso', 'Montanhas', 'Canadá', 1, 5),
+('Nina', 'Gosta de áreas abertas.', '2015-09-18', 'Leoa', 'Savana', 'Quênia', 1, 6),
+('Rex', 'Animal rápido.', '2017-02-21', 'Guepardo', 'Savana', 'Namíbia', 1, 7),
+('Milo', 'Curioso e atento.', '2021-04-28', 'Lince', 'Floresta Boreal', 'Rússia', 1, 8),
+('Jade', 'Calma e silenciosa.', '2014-10-10', 'Pantera Negra', 'Floresta', 'Índia', 1, 9),
+('Simba', 'Muito sociável.', '2018-08-19', 'Leão', 'Savana', 'Tanzânia', 1, 10),
+('Zara', 'Animal observador.', '2017-06-05', 'Tigre', 'Floresta', 'Bangladesh', 1, 11),
+('Leo', 'Caçador nato.', '2019-12-25', 'Leopardo', 'Savana', 'Ruanda', 1, 12),
+('Maya', 'Tranquila e dócil.', '2016-04-01', 'Onça', 'Pantanal', 'Brasil', 1, 13),
+('Apollo', 'Muito forte.', '2015-02-17', 'Urso Pardo', 'Montanhas', 'EUA', 1, 14),
+('Kiara', 'Rápida e esperta.', '2020-03-03', 'Guepardo', 'Savana', 'África do Sul', 1, 15),
+('Zeus', 'Dorminhoco.', '2013-12-12', 'Urso Polar', 'Ártico', 'Canadá', 1, 16),
+('Sasha', 'Animal atento.', '2016-07-07', 'Lobo', 'Floresta', 'Rússia', 1, 17),
+('Rocky', 'Muito ativo.', '2021-11-11', 'Raposa', 'Floresta', 'EUA', 1, 18),
+('Koda', 'Animal robusto.', '2014-09-09', 'Urso', 'Montanhas', 'Alasca', 1, 19),
+('Aria', 'Muito observadora.', '2019-10-20', 'Lince', 'Floresta', 'Noruega', 1, 20),
+('Toby', 'Gosta de correr.', '2017-01-13', 'Chacal', 'Deserto', 'Egito', 1, 21),
+('Lola', 'Extremamente dócil.', '2020-02-22', 'Leoa', 'Savana', 'Botsuana', 1, 22),
+('Hunter', 'Veloz.', '2018-06-16', 'Guepardo', 'Savana', 'Quênia', 1, 23),
+('Ghost', 'Silencioso.', '2014-03-30', 'Lobo Ártico', 'Tundra', 'Canadá', 1, 24),
+('Freya', 'Muito calma.', '2015-08-08', 'Raposa do Ártico', 'Tundra', 'Islândia', 1, 25),
+('Zion', 'Dominante.', '2016-10-02', 'Leão', 'Savana', 'África do Sul', 1, 26),
+('Nova', 'Solitária.', '2019-03-14', 'Pantera', 'Floresta', 'Índia', 1, 27),
+('Atlas', 'Forte.', '2017-11-18', 'Urso', 'Montanhas', 'Romênia', 1, 28),
+('Ruby', 'Muito ativa.', '2020-04-09', 'Onça', 'Floresta', 'Brasil', 1, 29),
+('Bruno', 'Pesado e grande.', '2013-07-21', 'Urso Pardo', 'Montanhas', 'EUA', 1, 30),
+('Loki', 'Enganador.', '2016-12-01', 'Lobo', 'Floresta', 'Suécia', 1, 31),
+('Ivy', 'Muito ágil.', '2018-05-08', 'Leopardo', 'Savana', 'Etiópia', 1, 32),
+('Ares', 'Corajoso.', '2015-06-17', 'Tigre', 'Floresta', 'Índia', 1, 33),
+('Nova', 'Sempre alerta.', '2021-03-03', 'Raposa', 'Floresta', 'EUA', 1, 34),
+('Zeke', 'Muito rápido.', '2019-09-09', 'Guepardo', 'Savana', 'Tanzânia', 1, 35),
+('Mira', 'Calma.', '2020-10-29', 'Pantera', 'Floresta', 'Brasil', 1, 36),
+('Odin', 'Grande e forte.', '2014-01-06', 'Urso', 'Montanha', 'Canadá', 1, 37),
+('Suki', 'Gentil.', '2017-04-04', 'Lince', 'Floresta', 'Suécia', 1, 38),
+('Flint', 'Sempre observando.', '2016-02-12', 'Lobo', 'Floresta', 'Alemanha', 1, 39),
+('Amber', 'Muito rápida.', '2018-07-27', 'Onça', 'Pantanal', 'Brasil', 1, 40),
+('Rory', 'Vocaliza muito.', '2021-02-15', 'Lobo', 'Floresta', 'EUA', 1, 41),
+('Mika', 'Tímida.', '2015-11-19', 'Raposa', 'Floresta', 'Canadá', 1, 42),
+('Zuri', 'Extremamente veloz.', '2019-08-23', 'Guepardo', 'Savana', 'Namíbia', 1, 43),
+('Nero', 'Grande caçador.', '2016-06-29', 'Tigre', 'Floresta', 'Índia', 1, 44),
+('Kira', 'Muito gentil.', '2020-09-10', 'Leoa', 'Savana', 'Botsuana', 1, 45),
+('Shadow', 'Silencioso.', '2017-03-02', 'Pantera Negra', 'Floresta', 'Malásia', 1, 46),
+('Bolt', 'Corre muito rápido.', '2018-05-05', 'Guepardo', 'Savana', 'Quênia', 1, 47),
+('Fang', 'Agressivo.', '2013-10-14', 'Lobo Cinzento', 'Floresta', 'Rússia', 1, 48),
+('Nala', 'Carinhosa.', '2021-01-21', 'Leoa', 'Savana', 'África do Sul', 1, 49),
+('Khan', 'Caçador poderoso.', '2014-04-04', 'Tigre', 'Floresta', 'Bangladesh', 1, 50),
+('Tara', 'Calma.', '2015-08-30', 'Onça', 'Pantanal', 'Brasil', 1, 51),
+('Blaze', 'Impulsivo.', '2018-12-12', 'Lobo', 'Floresta', 'EUA', 1, 52),
+('Echo', 'Não faz barulho.', '2017-07-07', 'Pantera', 'Floresta', 'Índia', 1, 53),
+('Zane', 'Ágil.', '2019-10-11', 'Leopardo', 'Floresta', 'Etiópia', 1, 54),
+('Orion', 'Grande.', '2013-03-03', 'Urso Pardo', 'Montanhas', 'EUA', 1, 55),
+('Fiona', 'Muito ativa.', '2021-05-20', 'Raposa', 'Floresta', 'Alemanha', 1, 56),
+('Arlo', 'Forte.', '2016-09-14', 'Lobo', 'Floresta', 'Polônia', 1, 57),
+('Yara', 'Sempre alerta.', '2018-06-06', 'Onça', 'Floresta', 'Brasil', 1, 58),
+('Zen', 'Sábio.', '2015-02-18', 'Lince', 'Floresta', 'Canadá', 1, 59),
+('Groot', 'Grande porte.', '2014-11-11', 'Urso', 'Montanhas', 'Rússia', 1, 60),
+('Raven', 'Silenciosa.', '2019-04-04', 'Pantera Negra', 'Floresta', 'Índia', 1, 61),
+('Tyson', 'Forte.', '2016-07-27', 'Leão', 'Savana', 'Tanzânia', 1, 62),
+('Skye', 'Muito rápida.', '2020-10-10', 'Guepardo', 'Savana', 'Namíbia', 1, 63),
+('Cleo', 'Calma.', '2017-01-01', 'Onça', 'Floresta', 'Brasil', 1, 64),
+('Juno', 'Atenta.', '2018-08-08', 'Lince', 'Floresta', 'Rússia', 1, 65),
+('Storm', 'Agressivo.', '2014-09-22', 'Lobo', 'Floresta', 'Canadá', 1, 66),
+('Lara', 'Muito dócil.', '2021-03-19', 'Raposa', 'Floresta', 'França', 1, 67),
+('Oso', 'Grande.', '2015-12-05', 'Urso Pardo', 'Montanhas', 'Chile', 1, 68),
+('Blade', 'Frio e calculista.', '2016-05-14', 'Pantera', 'Floresta', 'Índia', 1, 69),
+('Mango', 'Curioso.', '2018-02-28', 'Leopardo', 'Floresta', 'Congo', 1, 70),
+('Claw', 'Bravo.', '2013-11-17', 'Tigre', 'Floresta', 'Índia', 1, 71),
+('Yumi', 'Pequena e rápida.', '2020-06-06', 'Raposa', 'Floresta', 'Japão', 1, 72),
+('Kai', 'Grande caçador.', '2017-03-30', 'Lobo', 'Floresta', 'Noruega', 1, 73),
+('Sapphire', 'Elegante.', '2016-10-01', 'Pantera Negra', 'Floresta', 'Malásia', 1, 74),
+('Rocco', 'Forte.', '2018-12-29', 'Urso', 'Montanhas', 'Canadá', 1, 75),
+('Gale', 'Ágil.', '2019-04-16', 'Onça', 'Pantanal', 'Brasil', 1, 76),
+('Flora', 'Calma.', '2021-07-11', 'Lince', 'Floresta', 'Finlândia', 1, 77),
+('Axel', 'Muito rápido.', '2016-01-24', 'Guepardo', 'Savana', 'Quênia', 1, 78),
+('Vera', 'Carinhosa.', '2018-10-07', 'Leoa', 'Savana', 'Ruanda', 1, 79),
+('Czar', 'Dominante.', '2015-03-08', 'Tigre', 'Floresta', 'Índia', 1, 80),
+('Sombra', 'Silenciosa.', '2014-12-20', 'Pantera', 'Floresta', 'Brasil', 1, 81),
+('Falcon', 'Veloz.', '2017-08-08', 'Leopardo', 'Floresta', 'Etiópia', 1, 82),
+('Grizzly', 'Grande.', '2013-04-14', 'Urso Pardo', 'Montanhas', 'EUA', 1, 83),
+('Runa', 'Atenta.', '2019-05-18', 'Raposa', 'Floresta', 'Alemanha', 1, 84),
+('Bora', 'Inteligente.', '2020-11-03', 'Lince', 'Floresta', 'Rússia', 1, 85),
+('Jasper', 'Bravo.', '2016-02-11', 'Lobo', 'Floresta', 'EUA', 1, 86),
+('Igor', 'Grande porte.', '2015-09-30', 'Urso', 'Montanhas', 'Rússia', 1, 87),
+('Mira', 'Elegante.', '2018-06-14', 'Pantera', 'Floresta', 'Índia', 1, 88),
+('Floki', 'Ativo.', '2021-01-09', 'Raposa', 'Floresta', 'Noruega', 1, 89),
+('Enzo', 'Rápido.', '2017-04-25', 'Guepardo', 'Savana', 'Namíbia', 1, 90),
+('Loki Jr', 'Curioso.', '2019-09-22', 'Lobo', 'Floresta', 'Canadá', 1, 91),
+('Salem', 'Sombrio.', '2014-11-09', 'Pantera Negra', 'Floresta', 'Índia', 1, 92),
+('Kodiak', 'Gigante.', '2013-02-18', 'Urso Pardo', 'Montanhas', 'Rússia', 1, 93),
+('Pearl', 'Brilhante.', '2020-03-12', 'Onça', 'Pantanal', 'Brasil', 1, 94),
+('Dante', 'Explorador.', '2018-07-07', 'Lobo', 'Floresta', 'Alemanha', 1, 95),
+('Lena', 'Muito calma.', '2017-05-29', 'Raposa', 'Floresta', 'Canadá', 1, 96),
+('Odin Jr', 'Forte.', '2016-01-05', 'Urso', 'Montanhas', 'EUA', 1, 97),
+('Night', 'Silenciosa.', '2019-04-21', 'Pantera', 'Floresta', 'Malásia', 1, 98),
+('Snow', 'Ágil.', '2021-06-06', 'Raposa do Ártico', 'Tundra', 'Canadá', 1, 99),
+('Tiger Jr', 'Pequeno mas feroz.', '2020-08-28', 'Tigre', 'Floresta', 'Índia', 1, 100);
+
 
 INSERT INTO Cares VALUES ('Alimentacao','Fornecimento de comida adequada','Diaria',1);
 INSERT INTO Cares VALUES ('Exame Veterinario','Avaliação de saúde completa','Mensal',2);
