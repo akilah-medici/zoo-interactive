@@ -14,9 +14,12 @@ VALUES
 ('Medical Check', 'Monthly health check', 'Monthly', 2);
 
 -- Insert animal care records
-INSERT INTO Animal_Care_have (date_of_care, fk_Cares_cares_id, fk_Animal_animal_id)
+INSERT INTO Animal_Care_have (date_of_care, fk_Cares_cares_id, fk_Animal_animal_id, animal_care_id)
 VALUES
-('2025-11-01', 1, 1),
-('2025-11-02', 2, 2);
+('2025-11-01', 1, 1, 1),
+('2025-11-02', 2, 2, 2);
+
+INSERT INTO Animal (animal_id, name, description, date_of_birth, specie, habitat, country_of_origin)
+VALUES (3, 'Giraffe', 'Tall herbivorous mammal', '2012-04-10', 'Giraffa camelopardalis', 'Savannah', 'South Africa');
 
 GO

@@ -1,4 +1,4 @@
-use axum::routing::{Router, get};
+use axum::routing::{Router, get, post};
 use tower_http::cors::CorsLayer;
 
 pub mod db;
@@ -27,11 +27,21 @@ async fn main() {
     // Configure CORS
     let cors = CorsLayer::permissive();
 
+    let animals_router = Router::new()
+        .route("/list", get(get_animals))
+        .route("/add", post(add_animal))
+        .route("/animals/{id}", get(get_animal_by_id));
+
+    let cares_router = Router::new().route("/list", get(get_cares));
+
+    let animal_cares = Router::new().route("/list", get(get_animal_cares));
+
     // Build application routes
     let app = Router::new()
         .route("/message", get(initial_page))
-        .route("/animals", get(get_animals))
-        .route("/animals/{id}", get(get_animal_by_id))
+        .nest("/animals", animals_router)
+        .nest("/cares", cares_router)
+        .nest("/animal-cares", animal_cares)
         .with_state(database)
         .layer(cors);
 
@@ -40,8 +50,10 @@ async fn main() {
     println!("Server listening on port 3000");
     println!("Available endpoints:");
     println!("  GET /message - Test endpoint");
-    println!("  GET /animals - Get all animals");
-    println!("  GET /animals/:id - Get animal by ID");
+    println!("  GET /animals/list - Get all animals");
+    println!("  GET /cares/list - Get all cares for animals");
+    //println!("  GET /animals/:id - Get animal by ID");
+    println!("  POST /animals/add - Create new animal");
 
     axum::serve(listener, app).await.unwrap();
 }

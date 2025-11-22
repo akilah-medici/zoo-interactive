@@ -1,0 +1,179 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import DatePicker, { registerLocale } from "react-datepicker";
+import { ptBR } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
+
+registerLocale("pt-BR", ptBR);
+
+export default function ListPage() {
+    const [animals, setAnimals] = useState([]);
+    const [filtered, setFiltered] = useState([]);
+    const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [addAnimalDate, setAddAnimalDate] = useState(null);
+    const [newAnimal, setNewAnimal] = useState({
+        name: "",
+        specie: "",
+        habitat: "",
+        description: "",
+        country_of_origin: "",
+        date_of_birth: null
+    });
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setFiltered(
+                animals.filter((animal) => {
+                    const name = animal.name.toLowerCase();
+                    const specie = animal.specie ? animal.specie.toLowerCase() : "";
+                    const searchText = search.toLowerCase();
+                    return name.includes(searchText) || specie.includes(searchText);
+                })
+            );
+    }, [search, animals]);
+
+    useEffect(() => {
+        getAnimals();
+    }, []);
+
+    async function getAnimals() {
+        try {
+            setLoading(true);
+            setError(null);
+            const response = await fetch("http://localhost:3000/animals/list");
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setAnimals(data);
+            setFiltered(data);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function addAnimal() {
+        setError(null);
+        const payload = {
+            name: newAnimal.name,
+            specie: newAnimal.specie,
+            habitat: newAnimal.habitat || null,
+            description: newAnimal.description || null,
+            country_of_origin: newAnimal.country_of_origin || null,
+            date_of_birth: newAnimal.date_of_birth
+                ? newAnimal.date_of_birth.toISOString().slice(0, 10)
+                : null,
+        };
+        try {
+            const response = await fetch('http://localhost:3000/animals/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            if (!response.ok) {
+                throw new Error(`Failed to create animal: ${response.status}`);
+            }
+            const created = await response.json();
+            // Update lists optimistically
+            setAnimals(prev => [...prev, created]);
+            setFiltered(prev => [...prev, created]);
+            // Reset form
+            setNewAnimal({
+                name: '',
+                specie: '',
+                habitat: '',
+                description: '',
+                country_of_origin: '',
+                date_of_birth: null,
+            });
+        } catch (e) {
+            setError(e.message);
+        }
+        navigate("/");
+    }
+
+    function handleSearchChange(e) {
+        setSearch(e.target.value);
+    }
+
+    function handleChange(e) {
+        setNewAnimal({ ...newAnimal, [e.target.name]: e.target.value });
+    }
+
+    return (
+        <div style={{ padding: "2rem" }}>
+            <input
+                type="text"
+                placeholder="Search animals..."
+                value={search}
+                onChange={handleSearchChange}
+                style={{ width: "100%", padding: "0.5rem", marginBottom: "1rem" }}
+            />
+            <div style={{ display: "flex", gap: "2rem" }}>
+                {/* Animal List Section */}
+                <div style={{ flex: 1 }}>
+                    <h3>Lista de Animais</h3>
+                    {loading && <p>Loading...</p>}
+                    {error && <p style={{ color: "red" }}>Error: {error}</p>}
+                    {filtered.map((animal) => (
+                        <div
+                            key={animal.animal_id}
+                            style={{ border: "1px solid #ccc", marginBottom: "1rem", padding: "1rem" }}
+                        >
+                            <h3>{animal.name}</h3>
+                            <p>
+                                <strong>Specie:</strong> {animal.specie}
+                            </p>
+                            <p>
+                                <strong>Habitat:</strong> {animal.habitat}
+                            </p>
+                            <p>
+                                <strong>Description:</strong> {animal.description}
+                            </p>
+                            <p>
+                                <strong>Country of Origin:</strong> {animal.country_of_origin}
+                            </p>
+                            <p>
+                                <strong>Date of Birth:</strong> {new Date(animal.date_of_birth).toLocaleDateString("pt-BR")}
+                            </p>
+                        </div>
+                    ))}
+                    {filtered.length === 0 && !loading && <p>No animals found.</p>}
+                </div>
+
+                {/* Add Animal Section */}
+                <div style={{ flex: 1 }}>
+                    <h3>Adicionar Animal</h3>
+                    <table>
+                        <tbody>
+                            <tr><td><input type="text" name="name" placeholder="Nome do animal..." value={newAnimal.name} onChange={handleChange}/></td></tr>
+                            <tr><td><input type="text" name="specie" placeholder="Especie do animal..." value={newAnimal.specie} onChange={handleChange}/></td></tr>
+                            <tr><td><input type="text" name="description" placeholder="Descrição do animal..." value={newAnimal.description} onChange={handleChange}/></td></tr>
+                            <tr><td><input type="text" name="habitat" placeholder="Habitat do animal..." value={newAnimal.habitat} onChange={handleChange}/></td></tr>
+                            <tr><td><input type="text" name="country_of_origin" placeholder="País de origem do animal..." value={newAnimal.country_of_origin} onChange={handleChange}/></td></tr>
+                            <tr>
+                                <td>
+                                    <DatePicker
+                                        selected={newAnimal.date_of_birth}
+                                        onChange={date => setNewAnimal({ ...newAnimal, date_of_birth: date })}
+                                        dateFormat="dd/MM/yyyy"
+                                        placeholderText="Dia/Mês/Ano"
+                                        locale="pt-BR"
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button onClick={() => {navigate("/")}}>Páginal Principal</button>
+            <button onClick={() => {addAnimal()}}>Adicionar</button>
+        </div>
+    );
+}
+    

@@ -8,21 +8,22 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchAnimals();
+    getAnimals();
   }, []);
 
-  async function fetchAnimals() {
+  async function getAnimals() {
     try {
       setLoading(true);
       setError(null);
       
-      const response = await fetch('http://localhost:3000/animals');
+      const response = await fetch('http://localhost:3000/animals/list');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
+      console.log(data);
       setAnimals(data);
     } catch (err) {
       console.error("Error fetching animals:", err);
@@ -72,9 +73,9 @@ export default function Dashboard() {
           
           <div style={styles.animalsGrid}>
             {animals.map((animal) => (
-              <div key={animal.id} style={styles.animalCard}>
+              <div key={animal.animal_id} style={styles.animalCard}>
                 <h3 style={styles.animalName}>{animal.name}</h3>
-                <p><strong>Species:</strong> {animal.species}</p>
+                <p><strong>Species:</strong> {animal.specie}</p>
                 <p><strong>Habitat:</strong> {animal.habitat || 'Unknown'}</p>
                 <p>
                   <strong>Status:</strong>{' '}
@@ -86,7 +87,7 @@ export default function Dashboard() {
                   </span>
                 </p>
                 <p style={styles.dateText}>
-                  Added: {new Date(animal.created_at).toLocaleDateString()}
+                  Birth: {animal.date_of_birth ? new Date(animal.date_of_birth).toLocaleDateString("pt-BR") : "Unknown"}
                 </p>
               </div>
             ))}
@@ -97,6 +98,7 @@ export default function Dashboard() {
           )}
         </>
       )}
+      <button onClick={() => navigate("/list")} >Lista de Animais</button>
     </div>
   );
 }
@@ -150,6 +152,7 @@ const styles = {
     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
     transition: "transform 0.2s, box-shadow 0.2s",
     cursor: "pointer",
+    color: "#000000",
   },
   animalName: {
     color: "#2196F3",

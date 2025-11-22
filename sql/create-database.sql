@@ -18,7 +18,8 @@ CREATE TABLE Cares (
 CREATE TABLE Animal_Care_have (
     date_of_care DATE,
     fk_Cares_cares_id INT,
-    fk_Animal_animal_id INT
+    fk_Animal_animal_id INT,
+    animal_care_id INT PRIMARY KEY
 )
 ALTER TABLE Animal_Care_have ADD CONSTRAINT FK_Animal_Care_have_1
     FOREIGN KEY (fk_Cares_cares_id)
