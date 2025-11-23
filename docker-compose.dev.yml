@@ -48,8 +48,6 @@ services:
     volumes:
       - sqlserver-data:/var/opt/mssql
       - ./sql:/sql
-      - ./sql/init-db.sh:/init-db.sh
-    command: ["/bin/bash", "/init-db.sh"]
     healthcheck:
       test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P 'Password123' -Q 'SELECT 1' -C || exit 1"]
       interval: 10s
