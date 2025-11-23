@@ -54,13 +54,9 @@ async fn main() {
         .with_state(database)
         .layer(cors);
 
-    // Get port from environment variable (for Heroku) or default to 3000
-    let port = std::env::var("PORT").unwrap_or_else(|_| "3000".to_string());
-    let addr = format!("0.0.0.0:{}", port);
-
-    println!("Binding to {}...", addr);
-    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
-    println!("Server listening on port {}", port);
+    println!("Binding to 0.0.0.0:3000...");
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    println!("Server listening on port 3000");
     println!("Available endpoints:");
     println!("  GET /message - Test endpoint");
     println!("  GET /animals/list - Get all animals");

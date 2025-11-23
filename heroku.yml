@@ -1,5 +1,0 @@
-build:
-  docker:
-    web: backend/Dockerfile.heroku
-run:
-  web: ./target/release/backend
