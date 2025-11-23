@@ -29,9 +29,9 @@ Este projeto é uma aplicação web para gerenciamento de dados de um zoológico
 
 ![Tela incial](https://drive.google.com/uc?export=view&id=1z8WZucqMQ7vD5idRRpXgtS_0dtloYuOE)
 
-![Listar e criar animais][(https://drive.google.com/file/d/1ks1LvmCBTI_7rJg3fNubf3pXmeeNnpqt/view?usp=sharing)](https://drive.google.com/file/d/1ks1LvmCBTI_7rJg3fNubf3pXmeeNnpqt/view?usp=sharing)
+![Listar e criar animais](https://drive.google.com/uc?export=view&id=1ks1LvmCBTI_7rJg3fNubf3pXmeeNnpqt)
 
-![Modifcar animais][(https://drive.google.com/file/d/1zauPGb_Afx5MEGcpA2oncqyy9oBekLIU/view?usp=sharing)](https://drive.google.com/file/d/1zauPGb_Afx5MEGcpA2oncqyy9oBekLIU/view?usp=sharing)
+![Modifcar animais](https://drive.google.com/uc?export=view&id=1zauPGb_Afx5MEGcpA2oncqyy9oBekLIU)
 
 
 ## Desenvolvimento e Deploy
