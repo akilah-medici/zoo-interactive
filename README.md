@@ -48,7 +48,7 @@ restante, estas funcionalidades ficaram de fora do projeto, com ele sendo execut
 
 Fora estas cosiderações há outras a se fazer, como por exemplo, algumas consultas ao banco de dados e requisições funcionam para projetos pequenos e de aprendizado como este, mas pensando na futura escalabilidade que um projeto parecido possa ter, é necessário realizar varias otimizações, como por exemplo, em meu projeto o Frontend requisita a lista de animais e o Backend faz apenas um SELECT na tabela de Animais, e traz todas as linhas da tabela para o Frontend copiando desnecessariamente toda a estrutura de dados, o que poderia ser resolvido através de uma implementação por filtros ou algo do tipo, bem como a forma com que é feita a busca de cuidados pelo id de cada animal, sendo feita algumas consultas de forma desnecessário, que é algo que poderia ser resolvido por um JOIN entre a tabela de cuidados e a tabela relacionamento.
 
-Por ultimo há outra questão com o requisitado no enunciado do projeto sendo requisitado um CRUD da tabela de Cuidados, as funcionalidades de UPDATE e DELETE foram implementadas no Backend mas não foi possivel implementa-las no Frontend.
+Por ultimo há uma questão com o requisitado no enunciado do projeto, sendo o requisito de um CRUD da tabela de Cuidados, as funcionalidades de UPDATE e DELETE foram implementadas no Backend mas não foi possivel implementa-las no Frontend.
 
 Dadas estas considerações, posso dizer que foi um projeto bem interessante de divertido de se realizar, que me permitiu aprender e crescer um pouco mais.
 
