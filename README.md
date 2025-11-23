@@ -6,18 +6,14 @@ Este projeto é uma aplicação web para gerenciamento de dados de um zoológico
 - **Cadastro e listagem de animais:**
   - Permite registrar novos animais com informações detalhadas (nome, espécie, data de nascimento, etc.)
   - Visualização de todos os animais cadastrados em uma lista interativa
-  - Filtros por espécie, idade e outros atributos
 - **Registro de cuidados e interações:**
   - Adição de registros de cuidados realizados (alimentação, limpeza, saúde)
   - Associação dos cuidados a cada animal, com histórico completo
-  - Visualização dos cuidados pendentes ou realizados recentemente
+  - Visualização dos cuidados
 - **Interface interativa para visualização e modificação dos dados:**
   - Dashboard com estatísticas e gráficos sobre o zoológico
   - Páginas para modificar dados de animais e cuidados
   - Navegação intuitiva entre diferentes seções do sistema
-- **Controle de usuários e permissões (planejado):**
-  - Possibilidade de diferentes níveis de acesso para administradores e cuidadores
-  - Auditoria de alterações e registros
 
 ## Estrutura do Projeto
 - **backend/**: API REST desenvolvida em Rust, responsável pela lógica de negócio e acesso ao banco de dados
