@@ -29,9 +29,10 @@ Este projeto é uma aplicação web para gerenciamento de dados de um zoológico
 
 ![Tela incial](https://drive.google.com/uc?export=view&id=1z8WZucqMQ7vD5idRRpXgtS_0dtloYuOE)
 
-![Listar e criar animais](https://drive.google.com/file/d/1ks1LvmCBTI_7rJg3fNubf3pXmeeNnpqt/view?usp=sharing)
+![Listar e criar animais][(https://drive.google.com/file/d/1ks1LvmCBTI_7rJg3fNubf3pXmeeNnpqt/view?usp=sharing)](https://drive.google.com/file/d/1ks1LvmCBTI_7rJg3fNubf3pXmeeNnpqt/view?usp=sharing)
 
-![Modifcar animais](https://drive.google.com/file/d/1zauPGb_Afx5MEGcpA2oncqyy9oBekLIU/view?usp=sharing)
+![Modifcar animais][(https://drive.google.com/file/d/1zauPGb_Afx5MEGcpA2oncqyy9oBekLIU/view?usp=sharing)](https://drive.google.com/file/d/1zauPGb_Afx5MEGcpA2oncqyy9oBekLIU/view?usp=sharing)
+
 
 ## Desenvolvimento e Deploy
 O desenvolvimento foi realizado pensando em um futuro deploy em ambientes cloud, como Azure. O banco de dados pode ser facilmente migrado para um serviço gerenciado (ex: Azure SQL Database) e os containers podem ser integrados a serviços como Azure Container Instances ou Kubernetes.
