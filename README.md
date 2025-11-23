@@ -35,7 +35,18 @@ Este projeto é uma aplicação web para gerenciamento de dados de um zoológico
 
 
 ## Desenvolvimento e Deploy
-O desenvolvimento foi realizado pensando em um futuro deploy em ambientes cloud, como Azure. O banco de dados pode ser facilmente migrado para um serviço gerenciado (ex: Azure SQL Database) e os containers podem ser integrados a serviços como Azure Container Instances ou Kubernetes.
+O desenvolvimento foi realizado pensando em um futuro deploy em ambientes cloud, como Heroku. O banco de dados pode ser facilmente migrado para um serviço gerenciado (ex: Azure SQL Database) e os containers podem ser integrados a serviços como Azure Container Instances ou Kubernetes.
+
+O processo de desenvolvimento se deu da seguinte forma:
+
+Primeiro foi pensado em como deveria ser o design do aplicativo e em como seria experiencia do usuário, ou seja, quais telas haveriam, o que cada tela conteria, e como o fluxo de uso do aplicativo seria pretendido
+![Modelo conceitual do site](https://drive.google.com/uc?export=view&id=1BRNDzLUzZEJfL1LJb1T1HRBK_hQ9Jt1l)
+
+Após isso foi pensado em como estruturar o banco de dados, os modelos foram feitos no brModelo, e depois foi gerado o modelo físico. o modelo final se da pelo diagrama lógico abaixo.
+![Modelo lógico do banco de dados](https://drive.google.com/uc?export=view&id=12k6YwfNxrI2WAygF6wSfteIdxvHi_UqO)
+
+Após isso se deu inicio ao desenvolvimento, criando o container no Docker e inserido a aplicação em Rust/REACT dentro de seus respectivos containers, e foram utilizadas estas ferramentas por serem robustas, e REACT sendo uma facil de se aprender e trabalhar.
+
 
 ## Como iniciar o projeto
 Consulte os arquivos `INICIAR-PROJETO-DOCKER.md` (Windows) ou `INICIAR-PROJETO-DOCKER-LINUX.md` (Linux) para instruções detalhadas de inicialização local via Docker.
