@@ -121,34 +121,29 @@ export default function ListPage() {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", width: "100vw", padding: "2rem 1rem", boxSizing: "border-box" }}>
-            <div style={{ width: "100%", maxWidth: "1200px" }}>
-                <h1>Lista de Animais</h1>
+        <div className="page-container" style={{padding:"2rem 1rem"}}>
+            <div>
+                <h1 className="header-primary">Lista de Animais</h1>
                 <input
                     type="text"
+                    className="search-bar"
                     placeholder="Pesquise um animal por nome ou espécie..."
                     value={search}
                     onChange={handleSearchChange}
-                    style={{ width: "100%", padding: "0.5rem", marginBottom: "1rem" }}
                 />
 
                 {/* List + Add form side-by-side */}
                 <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
                     {/* Scrollable list container matching ModifyPage */}
-                    <div style={{ flex: 1, maxHeight: "600px", overflow: "auto",minWidth: "350px", maxWidth: "900px" }}>
-                        <h3 style={{ position: "sticky", top: 0, background: "#242424", color: "#ffffff", zIndex: 2, padding: "0.5rem 0" }}>Lista Completa</h3>
+                    <div className="scroll-list" style={{flex:1, minWidth:"350px", maxWidth:"900px"}}>
+                        <h3 style={{ position: "sticky", top: 0, background: "var(--color-secondary)", color: "#ffffff", zIndex: 2, padding: "0.5rem 0", margin:0, borderRadius:"6px" }}>Lista Completa</h3>
                         {loading && <p>Loading...</p>}
                         {error && <p style={{ color: "red" }}>Error: {error}</p>}
                         {filtered.map((animal, idx) => (
                             <div
                                 key={animal.animal_id}
-                                style={{
-                                    border: "1px solid #ccc",
-                                    marginBottom: "1rem",
-                                    padding: "1rem",
-                                    position: "relative",
-                                    ...(idx === 0 ? { marginTop: "8px" } : {})
-                                }}
+                                className="panel"
+                                style={{ position: "relative", ...(idx === 0 ? { marginTop: "8px" } : {}) }}
                                 onMouseEnter={() => setAnimalPopupID(animal.animal_id)}
                                 onMouseLeave={() => setAnimalPopupID(null)}
                             >
@@ -197,8 +192,8 @@ export default function ListPage() {
 
                 {/* Actions */}
                 <div style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}>
-                    <button onClick={() => { navigate("/") }}>Páginal Principal</button>
-                    <button onClick={() => { addAnimal() }}>Adicionar</button>
+                    <button className="btn-outline" onClick={() => { navigate("/") }}>Página Principal</button>
+                    <button className="btn-confirm" onClick={() => { addAnimal() }}>Adicionar</button>
                 </div>
             </div>
         </div>

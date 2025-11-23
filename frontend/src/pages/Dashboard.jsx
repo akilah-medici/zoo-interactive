@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const [animals, setAnimals] = useState([]);
+  const [randomAnimals, setRandomAnimals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export default function Dashboard() {
       const data = await response.json();
       console.log(data);
       setAnimals(data);
+      buildRandom(data);
     } catch (err) {
       console.error("Error fetching animals:", err);
       setError(err.message);
@@ -33,9 +35,20 @@ export default function Dashboard() {
     }
   }
 
+  function buildRandom(list) {
+    if (!Array.isArray(list)) return;
+    // Embaralha e pega até 10
+    const shuffled = [...list].sort(() => Math.random() - 0.5).slice(0, Math.min(10, list.length));
+    setRandomAnimals(shuffled);
+  }
+
+  function refreshRandom() {
+    buildRandom(animals);
+  }
+
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Zoo Dashboard</h1>
+    <div className="page-container">
+      <h1 className="header-primary">Zoo Dashboard</h1>
 
       {loading ? (
         <p>Loading animals...</p>
@@ -48,47 +61,32 @@ export default function Dashboard() {
         </div>
       ) : (
         <>
-          <div style={styles.statsContainer}>
-            <div style={styles.card}>
-              <h3>Total Animals</h3>
-              <p style={styles.number}>{animals.length}</p>
+          <div className="cards-grid" style={{marginTop:"1rem"}}>
+            <div className="panel-dark">
+              <h3>Total Animais</h3>
+              <p className="stat-number">{animals.length}</p>
             </div>
-
-            <div style={styles.card}>
-              <h3>Endangered Species</h3>
-              <p style={styles.number}>
-                {animals.filter(a => a.endangered).length}
-              </p>
+            <div className="panel-dark">
+              <h3>Habitats Únicos</h3>
+              <p className="stat-number">{new Set(animals.map(a => a.habitat).filter(Boolean)).size}</p>
             </div>
-
-            <div style={styles.card}>
-              <h3>Unique Habitats</h3>
-              <p style={styles.number}>
-                {new Set(animals.map(a => a.habitat).filter(Boolean)).size}
-              </p>
+            <div className="panel-dark">
+              <h3>Espécies Únicas</h3>
+              <p className="stat-number">{new Set(animals.map(a => a.specie).filter(Boolean)).size}</p>
             </div>
           </div>
 
-          <h2 style={styles.sectionTitle}>Animals List</h2>
-          
-          <div style={styles.animalsGrid}>
-            {animals.slice(0,6).map((animal) => (
-              <div key={animal.animal_id} style={styles.animalCard}>
-                <h3 style={styles.animalName}>{animal.name}</h3>
+          <h2 style={styles.sectionTitle}>Animais sortidos</h2>
+          <div style={{marginBottom:"1rem"}}>
+            <button className="btn-outline2" onClick={refreshRandom}>Sortear animais</button>
+          </div>
+          <div className="cards-grid">
+            {randomAnimals.map((animal) => (
+              <div key={animal.animal_id} className="panel">
+                <h3>{animal.name}</h3>
                 <p><strong>Espécie:</strong> {animal.specie}</p>
-                <p><strong>Habitat:</strong> {animal.habitat || 'Unknown'}</p>
-                <p>
-                  <strong>Status:</strong>{' '}
-                  <span style={{
-                    color: animal.endangered ? '#d32f2f' : '#388e3c',
-                    fontWeight: 'bold'
-                  }}>
-                    {animal.endangered ? '⚠️ Endangered' : '✓ Safe'}
-                  </span>
-                </p>
-                <p style={styles.dateText}>
-                  Birth: {animal.date_of_birth ? new Date(animal.date_of_birth).toLocaleDateString("pt-BR") : "Unknown"}
-                </p>
+                <p><strong>Habitat:</strong> {animal.habitat || 'N/D'}</p>
+                <p><strong>Nascimento:</strong> {animal.date_of_birth ? new Date(animal.date_of_birth).toLocaleDateString("pt-BR") : 'N/D'}</p>
               </div>
             ))}
           </div>
@@ -98,8 +96,8 @@ export default function Dashboard() {
           )}
         </>
       )}
-      <button onClick={() => navigate("/list")} >Lista de Animais</button>
-      <button onClick={() => navigate("/modify")} >Modificar Animais</button>
+      <button className="btn-confirm" onClick={() => navigate("/list")} >Lista de Animais</button>
+      <button className="btn-outline" onClick={() => navigate("/modify")} >Modificar Animais</button>
     </div>
   );
 }
@@ -182,14 +180,5 @@ const styles = {
     fontSize: "18px",
     marginTop: "40px",
   },
-  button: {
-    padding: "12px 20px",
-    border: "none",
-    borderRadius: "8px",
-    cursor: "pointer",
-    background: "#4CAF50",
-    color: "white",
-    fontSize: "16px",
-    marginTop: "10px",
-  },
+  button: {},
 };

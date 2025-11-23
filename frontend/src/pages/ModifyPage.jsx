@@ -62,46 +62,6 @@ export default function ModifyPage() {
         }
     }
 
-    async function addAnimal() {
-        setError(null);
-        const payload = {
-            name: newAnimal.name,
-            specie: newAnimal.specie,
-            habitat: newAnimal.habitat || null,
-            description: newAnimal.description || null,
-            country_of_origin: newAnimal.country_of_origin || null,
-            date_of_birth: newAnimal.date_of_birth
-                ? newAnimal.date_of_birth.toISOString().slice(0, 10)
-                : null,
-        };
-        try {
-            const response = await fetch('http://localhost:3000/animals/add', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
-            if (!response.ok) {
-                throw new Error(`Failed to create animal: ${response.status}`);
-            }
-            const created = await response.json();
-            // Update lists optimistically
-            setAnimals(prev => [...prev, created]);
-            setFiltered(prev => [...prev, created]);
-            // Reset form
-            setNewAnimal({
-                name: '',
-                specie: '',
-                habitat: '',
-                description: '',
-                country_of_origin: '',
-                date_of_birth: null,
-            });
-        } catch (e) {
-            setError(e.message);
-        }
-        navigate("/");
-    }
-
     function handleSearchChange(e) {
         setSearch(e.target.value);
     }
@@ -127,8 +87,8 @@ export default function ModifyPage() {
         try {
             setError(null);
             const deletePromises = selectedAnimals.map(id =>
-                fetch(`http://localhost:3000/animals/deactivate/${id}`, {
-                    method: 'POST'
+                fetch(`http://localhost:3000/animals/delete/${id}`, {
+                    method: 'DELETE'
                 })
             );
 
@@ -258,27 +218,24 @@ export default function ModifyPage() {
 
 
     return (
-        <div style={{display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100vw",
-                }}>
-            <div >
-                <h1>Modificar Animais</h1>
+        <div className="page-container" style={{display:"flex", flexDirection:"column"}}>
+            <div>
+                <h1 className="header-primary">Modificar Animais</h1>
             <input
                 type="text"
+                className="search-bar"
                 placeholder="Pesquise um animal por nome ou espécie..."
                 value={search}
                 onChange={handleSearchChange}
-                style={{ width: "100%", padding: "0.5rem", marginBottom: "1rem"}}
             />
-            <div style={{ flex: 1, maxHeight: "600px", overflow: "auto", minWidth: "350px" }}>
-                <h3 style={{ position: "sticky", top: 0, background: "#242424", color: "#ffffff", zIndex: 2, padding: "0.5rem 0" }}>Lista de Animais</h3>
+            <div className="scroll-list" style={{ minWidth: "350px" }}>
+                <h3 style={{ position: "sticky", top: 0, background: "var(--color-secondary)", color: "#ffffff", zIndex: 2, padding: "0.5rem 0", margin:0, borderRadius:"6px" }}>Lista de Animais</h3>
                 {loading && <p>Loading...</p>}
                 {error && <p style={{ color: "red" }}>Error: {error}</p>}
                 {filtered.map((animal) => (
                     <div
                         key={animal.animal_id}
+                        className="panel"
                         style={{ 
                             border: "1px solid #ccc", 
                             marginBottom: "1rem", 
@@ -314,9 +271,9 @@ export default function ModifyPage() {
                 {filtered.length === 0 && !loading && <p>Nenhum animal encontrado.</p>}
             </div>
             <div style={{padding: "2rem"}}>
-                <button onClick={() => {navigate("/")}}>Páginal Principal</button>
-                <button onClick={startModifyWorkflow}>Modificar ({selectedAnimals.length})</button>
-                <button onClick={deleteSelectedAnimals}>Excluir ({selectedAnimals.length})</button>
+                <button className="btn-outline" onClick={() => {navigate("/")}}>Página Principal</button>
+                <button className="btn-confirm" onClick={startModifyWorkflow}>Modificar ({selectedAnimals.length})</button>
+                <button className="btn-danger" onClick={deleteSelectedAnimals}>Excluir ({selectedAnimals.length})</button>
             </div>
             
             {currentModifyIndex !== null && (

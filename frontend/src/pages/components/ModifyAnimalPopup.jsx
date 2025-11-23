@@ -136,15 +136,7 @@ export default function ModifyAnimalPopup({ animal, onSave, onCancel, animalInde
             alignItems: "center",
             zIndex: 1000
         }}>
-            <div style={{
-                background: "#fff",
-                padding: "2rem",
-                borderRadius: "8px",
-                maxWidth: "600px",
-                maxHeight: "80vh",
-                overflow: "auto",
-                width: "90%"
-            }}>
+            <div className="modal-surface" style={{maxWidth:"600px", maxHeight:"80vh", overflow:"auto", width:"90%"}}>
                 <h2>Modificar Animal ({animalIndex} de {totalAnimals})</h2>
                 <p><strong>Animal:</strong> {animal.name}</p>
                 
@@ -309,18 +301,8 @@ export default function ModifyAnimalPopup({ animal, onSave, onCancel, animalInde
                 )}
 
                 <div style={{ marginTop: "1.5rem", display: "flex", gap: "1rem", justifyContent: "flex-end" }}>
-                    <button
-                        onClick={onCancel}
-                        style={{ padding: "0.5rem 1rem", background: "#ccc", border: "none", borderRadius: "4px", cursor: "pointer" }}
-                    >
-                        Cancelar
-                    </button>
-                    <button
-                        onClick={handleSave}
-                        style={{ padding: "0.5rem 1rem", background: "#4CAF50", color: "white", border: "none", borderRadius: "4px", cursor: "pointer" }}
-                    >
-                        Salvar
-                    </button>
+                    <button className="btn-cancel" onClick={onCancel}>Cancelar</button>
+                    <button className="btn-confirm" onClick={handleSave}>Salvar</button>
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@ pub struct CreateCare {
 }
 
 #[derive(Debug, Deserialize)]
-pub struct UpdateCrare {
+pub struct UpdateCare {
     pub type_of_care: String,
     pub frequency: String,
     pub description: Option<String>,

@@ -1,12 +1,18 @@
 :root {
+  --color-primary: #2FBA33;
+  --color-secondary: #503541;
+  --color-bg: #ffffff;
+  --color-surface: #503541;
+  --color-surface-alt: #ffffff;
+  --color-danger: #d63636;
+  --color-text: #212121;
+  --color-text-invert: #ffffff;
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color: var(--color-text);
+  background: var(--color-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -24,10 +30,20 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary) 42%, var(--color-bg) 42%, var(--color-bg) 100%);
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 1440 320'><path fill='%23503541' fill-opacity='1' d='M0,160L48,154.7C96,149,192,139,288,154.7C384,171,480,213,576,202.7C672,192,768,128,864,112C960,96,1056,128,1152,154.7C1248,181,1344,203,1392,213.3L1440,224L1440 320L1392 320C1344 320 1248 320 1152 320C1056 320 960 320 864 320C768 320 672 320 576 320C480 320 384 320 288 320C192 320 96 320 48 320L0 320Z'></path></svg>") no-repeat top center;
+  background-size: cover;
+  opacity: 0.9;
 }
 
 h1 {
@@ -37,22 +53,32 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+  border: none;
+  padding: 0.65em 1.25em;
+  font-size: 0.95em;
+  font-weight: 600;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.25s, transform 0.15s;
+  background: var(--color-secondary);
+  color: var(--color-text-invert);
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+button:hover { transform: translateY(-2px); }
+button:active { transform: translateY(0); }
+
+.btn-confirm { background: var(--color-primary); }
+.btn-danger, .btn-cancel { background: var(--color-danger); }
+.btn-outline { background: transparent; border:2px solid var(--color-primary); color: var(--color-primary); }
+.btn-outline2 { background: transparent; border:2px solid var(--color-secondary); color: var(--color-secondary); }
+.btn-outline:hover { background: var(--color-secondary); color: var(--color-text-invert); border: var(--color-text-invert); }
+
+.panel { background: var(--color-surface-alt); border:2px solid var(--color-secondary); border-radius:12px; padding:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.15); }
+.panel-dark { background: var(--color-surface); color: var(--color-text-invert); border-radius:12px; padding:1rem; box-shadow:0 2px 6px rgba(0,0,0,0.25); }
+.panel h3, .panel-dark h3 { margin-top:0; }
+
+.cards-grid { display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); }
+
+.stat-number { font-size:2.2rem; font-weight:700; margin:0.25rem 0 0; }
 
 @media (prefers-color-scheme: light) {
   :root {

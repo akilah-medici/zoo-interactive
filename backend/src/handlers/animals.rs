@@ -238,6 +238,40 @@ pub async fn deactivate_animal(
     Ok(StatusCode::NO_CONTENT)
 }
 
+/// Handler to delete an animal (HTTP DELETE semantics).
+/// Performs a soft delete (sets is_active = 0) to preserve referential integrity.
+pub async fn delete_animal(
+    State(db): State<Database>,
+    Path(id): Path<i32>,
+) -> Result<StatusCode, (StatusCode, String)> {
+    let mut client = db.connect().await.map_err(|e| {
+        eprintln!("Database connection error: {}", e);
+        (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("Database connection error: {}", e),
+        )
+    })?;
+
+    let query = "UPDATE Animal SET is_active = 0 WHERE animal_id = @P1 AND is_active = 1";
+
+    let rows_affected = client.execute(query, &[&id]).await.map_err(|e| {
+        eprintln!("Delete error: {}", e);
+        (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("Delete error: {}", e),
+        )
+    })?;
+
+    if rows_affected.total() == 0 {
+        return Err((
+            StatusCode::NOT_FOUND,
+            format!("Animal with id {} not found or already inactive", id),
+        ));
+    }
+
+    Ok(StatusCode::NO_CONTENT)
+}
+
 /// Handler to update an existing animal
 pub async fn update_animal(
     State(db): State<Database>,

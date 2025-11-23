@@ -1,0 +1,38 @@
+:root {}
+
+.page-container { max-width:1280px; margin:0 auto; padding:2rem; position:relative; }
+.header-primary { color: var(--color-secondary); margin:0 0 1.5rem; }
+.search-bar { width:100%; padding:0.6rem 0.8rem; border:2px solid var(--color-secondary); border-radius:8px; background:#fff; color:var(--color-text); }
+.scroll-list { max-height:600px; overflow:auto; }
+.animal-panel { }
+.actions-bar { display:flex; gap:1rem; margin-top:1rem; }
+.grid { display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); }
+.modal-surface { background:#ffffff; border:2px solid var(--color-secondary); border-radius:12px; padding:2rem; box-shadow:0 4px 20px rgba(0,0,0,0.3); }
+.popup-care { background:#ffffff; border:2px solid var(--color-secondary); padding:1rem; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.15); }
+.popup-care h2 { margin-top:0; color:var(--color-secondary); }
+
+/* Contrast helpers for secondary (#503541) background regions */
+.bg-secondary { background: var(--color-secondary); color: var(--color-text-invert); }
+.contrast-secondary, .bg-secondary h1, .bg-secondary h2, .bg-secondary h3, .bg-secondary p, .bg-secondary span, .bg-secondary label { color: var(--color-text-invert); }
+.bg-secondary a { color: var(--color-primary); }
+.bg-secondary a:hover { filter:brightness(1.2); }
+
+/* When a panel sits directly atop the dark secondary area, force a subtle elevation and inner shadow */
+.elevated-on-secondary { box-shadow:0 6px 18px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08); }
+
+/* Sticky headers already using secondary: ensure full contrast */
+.sticky-secondary { background: var(--color-secondary); color: var(--color-text-invert); }
+
+/* Inputs placed in dark zones should invert */
+.bg-secondary .search-bar, .bg-secondary input[type="text"], .bg-secondary textarea { background:#ffffff; color: var(--color-text); border-color:#ffffff; }
+.bg-secondary .search-bar::placeholder, .bg-secondary input[type="text"]::placeholder { color:#666; }
+
+/* Buttons on secondary background: outline variant contrasted */
+.bg-secondary .btn-outline { border-color:#ffffff; color:#ffffff; }
+.bg-secondary .btn-outline:hover { background:#ffffff; color:var(--color-secondary); }
+
+/* Utility to wrap sections crossing the wave area */
+.section-overlay-secondary { position:relative; z-index:2; }
+
+/* Optional gradient overlay for better readability when content crosses wave */
+.wave-contrast-layer { position:absolute; inset:0; background:linear-gradient(180deg, rgba(80,53,65,0.6) 0%, rgba(80,53,65,0.0) 60%); pointer-events:none; }
