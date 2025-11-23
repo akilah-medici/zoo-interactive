@@ -7,6 +7,13 @@ services:
     environment:
       - RUST_LOG=info
       - ENVIRONMENT=development
+      - DB_HOST=sqlserver
+      - DB_PORT=1433
+      - DB_USER=SA
+      - DB_PASSWORD=Password123
+      - DB_NAME=zoo_db
+    depends_on:
+      - sqlserver
 
   react-frontend:
     build: ./frontend
