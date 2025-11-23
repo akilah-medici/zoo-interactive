@@ -24,7 +24,6 @@ async fn main() {
         .await
         .expect("Failed to connect to database");
 
-    // Configure CORS
     let cors = CorsLayer::permissive();
 
     let animals_router = Router::new()
@@ -48,7 +47,6 @@ async fn main() {
         .route("/by-animal/by-id/{id}", get(get_animal_care_by_animal_id))
         .route("/add", post(add_animal_care));
 
-    // Build application routes
     let app = Router::new()
         .route("/message", get(initial_page))
         .nest("/animals", animals_router)
@@ -61,11 +59,22 @@ async fn main() {
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     println!("Server listening on port 3000");
     println!("Available endpoints:");
-    println!("  GET /message - Test endpoint");
-    println!("  GET /animals/list - Get all animals");
-    println!("  GET /cares/list - Get all cares for animals");
-    //println!("  GET /animals/:id - Get animal by ID");
-    println!("  POST /animals/add - Create new animal");
+    println!("  GET    /message                         - Test endpoint");
+    println!("  GET    /animals/list                    - List all animals (active)");
+    println!("  GET    /animals/animals/id              - Get animal by ID");
+    println!("  POST   /animals/add                     - Add new animal");
+    println!("  PUT    /animals/update/id               - Update animal");
+    println!("  POST   /animals/deactivate/id           - Soft delete animal");
+    println!("  DELETE /animals/delete/id               - Hard delete animal");
+    println!("  GET    /cares/list                      - List all cares");
+    println!("  GET    /cares/by-id/id                  - Get care by ID");
+    println!("  POST   /cares/add                       - Add new care");
+    println!("  PUT    /cares/update/id                 - Update care");
+    println!("  DELETE /cares/delete/id                 - Delete care");
+    println!("  GET    /animal-cares/list               - List all animal-care relations");
+    println!("  GET    /animal-cares/by-id/id           - Get animal-care relation by ID");
+    println!("  GET    /animal-cares/by-animal/by-id/id - Get all cares for animal by animal ID");
+    println!("  POST   /animal-cares/add                - Add animal-care relation");
 
     axum::serve(listener, app).await.unwrap();
 }

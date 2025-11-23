@@ -7,8 +7,6 @@ use axum::{
 };
 use chrono::NaiveDate;
 
-/// Handler to get all animals from the database
-
 pub async fn get_animals(
     State(db): State<Database>,
 ) -> Result<Json<Vec<Animal>>, (StatusCode, String)> {
@@ -53,8 +51,6 @@ pub async fn get_animals(
 
     Ok(Json(animals))
 }
-
-/// Handler to get a specific animal by ID
 
 pub async fn get_animal_by_id(
     State(db): State<Database>,
@@ -105,13 +101,11 @@ pub async fn get_animal_by_id(
     }
 }
 
-/// Handler to insert a new animal into the database
-
 pub async fn add_animal(
     State(db): State<Database>,
     Json(payload): Json<CreateAnimal>,
 ) -> Result<(StatusCode, Json<Animal>), (StatusCode, String)> {
-    // Validate required fields
+
     if payload.name.trim().is_empty() {
         return Err((
             StatusCode::BAD_REQUEST,
@@ -133,7 +127,6 @@ pub async fn add_animal(
         )
     })?;
 
-    // Parse date_of_birth if provided (supporting dd/MM/yyyy and yyyy-MM-dd)
     let parsed_date: Option<NaiveDate> = if let Some(d) = &payload.date_of_birth {
         if d.contains('/') {
             NaiveDate::parse_from_str(d, "%d/%m/%Y").ok()
@@ -144,7 +137,6 @@ pub async fn add_animal(
         None
     };
 
-    // Determine next id manually (table lacks IDENTITY)
     let id_query = "SELECT ISNULL(MAX(animal_id),0)+1 AS next_id FROM Animal";
     let id_stream = client.query(id_query, &[]).await.map_err(|e| {
         eprintln!("ID query error: {}", e);
@@ -205,7 +197,6 @@ pub async fn add_animal(
     Ok((StatusCode::CREATED, Json(created)))
 }
 
-/// Handler to soft-delete an animal by setting is_active to 0
 pub async fn deactivate_animal(
     State(db): State<Database>,
     Path(id): Path<i32>,
@@ -238,8 +229,6 @@ pub async fn deactivate_animal(
     Ok(StatusCode::NO_CONTENT)
 }
 
-/// Handler to delete an animal (HTTP DELETE semantics).
-/// Performs a soft delete (sets is_active = 0) to preserve referential integrity.
 pub async fn delete_animal(
     State(db): State<Database>,
     Path(id): Path<i32>,
@@ -272,13 +261,13 @@ pub async fn delete_animal(
     Ok(StatusCode::NO_CONTENT)
 }
 
-/// Handler to update an existing animal
+
 pub async fn update_animal(
     State(db): State<Database>,
     Path(id): Path<i32>,
     Json(payload): Json<UpdateAnimal>,
 ) -> Result<Json<Animal>, (StatusCode, String)> {
-    // Validate required fields if provided
+
     if let Some(ref name) = payload.name {
         if name.trim().is_empty() {
             return Err((StatusCode::BAD_REQUEST, "Name cannot be empty".to_string()));
@@ -301,7 +290,6 @@ pub async fn update_animal(
         )
     })?;
 
-    // Parse date_of_birth if provided
     let parsed_date: Option<NaiveDate> = if let Some(d) = &payload.date_of_birth {
         if d.contains('/') {
             NaiveDate::parse_from_str(d, "%d/%m/%Y").ok()
@@ -312,7 +300,6 @@ pub async fn update_animal(
         None
     };
 
-    // Build dynamic UPDATE query based on provided fields
     let update_query = r#"
         UPDATE Animal 
         SET name = COALESCE(@P2, name),
@@ -353,7 +340,6 @@ pub async fn update_animal(
         ));
     }
 
-    // Fetch and return the updated animal
     let query = "SELECT animal_id, name, specie, habitat, description, country_of_origin, date_of_birth FROM Animal WHERE animal_id = @P1 AND is_active = 1";
     let stream = client.query(query, &[&id]).await.map_err(|e| {
         eprintln!("Query error: {}", e);
@@ -390,7 +376,6 @@ pub async fn update_animal(
     }
 }
 
-/// Original handler - kept for backward compatibility
 pub async fn initial_page() -> &'static str {
     "Hello from backend!"
 }

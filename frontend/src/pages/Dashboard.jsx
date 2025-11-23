@@ -37,7 +37,6 @@ export default function Dashboard() {
 
   function buildRandom(list) {
     if (!Array.isArray(list)) return;
-    // Embaralha e pega até 10
     const shuffled = [...list].sort(() => Math.random() - 0.5).slice(0, Math.min(10, list.length));
     setRandomAnimals(shuffled);
   }

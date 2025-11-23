@@ -1,4 +1,3 @@
--- Create the database if it doesn't exist
 IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'zoo_db')
 BEGIN
     CREATE DATABASE zoo_db;

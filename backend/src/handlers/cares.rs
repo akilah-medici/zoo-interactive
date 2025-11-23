@@ -96,12 +96,11 @@ pub async fn get_care_by_id(
     }
 }
 
-/// Handler to add a new care
 pub async fn add_care(
     State(db): State<Database>,
     Json(payload): Json<CreateCare>,
 ) -> Result<(StatusCode, Json<Care>), (StatusCode, String)> {
-    // Validate required fields
+
     if payload.type_of_care.trim().is_empty() {
         return Err((
             StatusCode::BAD_REQUEST,
@@ -123,7 +122,6 @@ pub async fn add_care(
         )
     })?;
 
-    // Determine next id manually
     let id_query = "SELECT ISNULL(MAX(cares_id),0)+1 AS next_id FROM Cares";
     let id_stream = client.query(id_query, &[]).await.map_err(|e| {
         eprintln!("ID query error: {}", e);
@@ -178,7 +176,6 @@ pub async fn add_care(
     Ok((StatusCode::CREATED, Json(created)))
 }
 
-/// Handler to update an existing care (full update: all fields required)
 pub async fn update_care(
     State(db): State<Database>,
     Path(id): Path<i32>,
@@ -254,7 +251,6 @@ pub async fn update_care(
     }
 }
 
-/// Handler to delete (hard delete) a care
 pub async fn delete_care(
     State(db): State<Database>,
     Path(id): Path<i32>,

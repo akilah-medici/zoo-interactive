@@ -14,7 +14,6 @@ export default function ListPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [popupController, setPopupController] = useState(false);
-    // tirar depois
     const [animalPopupID, setAnimalPopupID] = useState(null);
     const [addAnimalDate, setAddAnimalDate] = useState(null);
     const [newAnimal, setNewAnimal] = useState({
@@ -64,7 +63,6 @@ export default function ListPage() {
     async function addAnimal() {
         setError(null);
         
-        // Validate required fields
         if (!newAnimal.name || newAnimal.name.trim() === '') {
             setError('O campo Nome é obrigatório');
             return;
@@ -94,10 +92,10 @@ export default function ListPage() {
                 throw new Error(`Failed to create animal: ${response.status}`);
             }
             const created = await response.json();
-            // Update lists optimistically
+
             setAnimals(prev => [...prev, created]);
             setFiltered(prev => [...prev, created]);
-            // Reset form
+
             setNewAnimal({
                 name: '',
                 specie: '',
@@ -131,10 +129,8 @@ export default function ListPage() {
                     value={search}
                     onChange={handleSearchChange}
                 />
-
-                {/* List + Add form side-by-side */}
                 <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start" }}>
-                    {/* Scrollable list container matching ModifyPage */}
+
                     <div className="scroll-list" style={{flex:1, minWidth:"350px", maxWidth:"900px"}}>
                         <h3 style={{ position: "sticky", top: 0, background: "var(--color-secondary)", color: "#ffffff", zIndex: 2, padding: "0.5rem 0", margin:0, borderRadius:"6px" }}>Lista Completa</h3>
                         {loading && <p>Loading...</p>}
@@ -159,7 +155,6 @@ export default function ListPage() {
                         
                     </div>
 
-                    {/* Add Animal Section (side-by-side) */}
                     <div style={{ flex: "0 0 360px" }}>
                         <h3>Adicionar Animal</h3>
                         <table>
@@ -190,7 +185,6 @@ export default function ListPage() {
                     </div>
                 </div>
 
-                {/* Actions */}
                 <div style={{ marginTop: "1rem", display: "flex", gap: "1rem" }}>
                     <button className="btn-outline" onClick={() => { navigate("/") }}>Página Principal</button>
                     <button className="btn-confirm" onClick={() => { addAnimal() }}>Adicionar</button>

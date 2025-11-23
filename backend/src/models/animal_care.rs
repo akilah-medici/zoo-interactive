@@ -1,7 +1,6 @@
 use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
 
-/// Model for the Animal_Care_have table
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AnimalCare {
     pub animal_care_id: i32,

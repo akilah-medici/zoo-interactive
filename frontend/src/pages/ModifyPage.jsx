@@ -16,7 +16,6 @@ export default function ModifyPage() {
     const [error, setError] = useState(null);
     const [selectedAnimals, setSelectedAnimals] = useState([]);
     const [currentModifyIndex, setCurrentModifyIndex] = useState(null);
-    // tirar depois
     const [addAnimalDate, setAddAnimalDate] = useState(null);
     const [newAnimal, setNewAnimal] = useState({
         name: "",
@@ -99,7 +98,6 @@ export default function ModifyPage() {
                 throw new Error(`Falha ao excluir ${failedDeletes.length} animal(is)`);
             }
 
-            // Remove deactivated animals from state
             setAnimals(prev => prev.filter(a => !selectedAnimals.includes(a.animal_id)));
             setFiltered(prev => prev.filter(a => !selectedAnimals.includes(a.animal_id)));
             setSelectedAnimals([]);
@@ -121,7 +119,6 @@ export default function ModifyPage() {
         try {
             setError(null);
             
-            // Update animal
             const animalResponse = await fetch(`http://localhost:3000/animals/update/${modifiedAnimal.animal_id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -143,11 +140,9 @@ export default function ModifyPage() {
 
             const updatedAnimal = await animalResponse.json();
 
-            // Handle care if provided
             if (careData) {
                 let careId = careData.careId;
 
-                // Create new care if needed
                 if (careData.isNewCare) {
                     const careResponse = await fetch('http://localhost:3000/cares/add', {
                         method: 'POST',
@@ -167,7 +162,6 @@ export default function ModifyPage() {
                     careId = createdCare.cares_id;
                 }
 
-                // Create animal-care relationship
                 const relationResponse = await fetch('http://localhost:3000/animal-cares/add', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -185,7 +179,6 @@ export default function ModifyPage() {
                 }
             }
 
-            // Update local state
             setAnimals(prev => prev.map(a => 
                 a.animal_id === updatedAnimal.animal_id ? updatedAnimal : a
             ));
@@ -193,11 +186,10 @@ export default function ModifyPage() {
                 a.animal_id === updatedAnimal.animal_id ? updatedAnimal : a
             ));
 
-            // Move to next animal or finish
             if (currentModifyIndex < selectedAnimals.length - 1) {
                 setCurrentModifyIndex(currentModifyIndex + 1);
             } else {
-                // Workflow complete
+
                 setCurrentModifyIndex(null);
                 setSelectedAnimals([]);
             }
@@ -207,7 +199,7 @@ export default function ModifyPage() {
     }
 
     function handleModifyCancel() {
-        // Skip to next animal or finish
+
         if (currentModifyIndex < selectedAnimals.length - 1) {
             setCurrentModifyIndex(currentModifyIndex + 1);
         } else {
@@ -215,8 +207,7 @@ export default function ModifyPage() {
             setSelectedAnimals([]);
         }
     }
-
-
+    
     return (
         <div className="page-container" style={{display:"flex", flexDirection:"column"}}>
             <div>

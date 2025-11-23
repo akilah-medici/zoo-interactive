@@ -141,7 +141,6 @@ pub async fn get_animal_care_by_animal_id(
     }
 }
 
-/// Handler to add a new animal care relationship
 pub async fn add_animal_care(
     State(db): State<Database>,
     Json(payload): Json<CreateAnimalCare>,
@@ -165,7 +164,6 @@ pub async fn add_animal_care(
         None
     };
 
-    // Determine next id manually
     let id_query = "SELECT ISNULL(MAX(animal_care_id),0)+1 AS next_id FROM Animal_Care_have";
     let id_stream = client.query(id_query, &[]).await.map_err(|e| {
         eprintln!("ID query error: {}", e);
