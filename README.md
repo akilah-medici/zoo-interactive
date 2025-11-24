@@ -57,6 +57,6 @@ Fora estas cosiderações há outras a se fazer, como por exemplo, algumas consu
 
 Por ultimo há uma questão com o requisitado no enunciado do projeto, sendo o requisito de um CRUD da tabela de Cuidados, as funcionalidades de UPDATE e DELETE foram implementadas no Backend mas não foi possivel implementa-las no Frontend.
 
-Dadas estas considerações, posso dizer que foi um projeto bem interessante de divertido de se realizar, que me permitiu aprender e crescer um pouco mais.
+Dadas estas considerações, posso dizer que foi um projeto bem interessante e divertido de se realizar, que me permitiu aprender e crescer um pouco mais.
 
 
